@@ -9,6 +9,46 @@
 
 		<script src="https://code.jquery.com/jquery-3.0.0.min.js" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		
+		<!-- script to hide/show different fields based on who is being registered -->
+		<script>
+			$(document).ready(function()
+            {
+                $("#customer").change(function()
+        		{
+            		if($(this).val() == "Me")
+        			{
+        				//TODO
+            			$("#registration").show();
+        			}
+
+        			else if($(this).val() == "SO")
+        			{
+        				//TODO
+            			$("#registration").show();
+        			}
+
+        			else if($(this).val() == "Adult")
+        			{
+        				//TODO
+            			$("#registration").show();
+        			}
+
+        			else if($(this).val() == "Child") // child sign up
+        			{
+        				//TODO
+            			$("#registration").show();
+        			}
+        			else
+        			{
+        				$("#registration").hide();	
+        			}
+            	});
+                $("#registration").hide();
+			});
+		</script>
+		<!-- end registration script -->
+	
 	</head>
 	<body>
 		<div class="container">
@@ -20,7 +60,16 @@
 			</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 			<!-- Google Translate End -->
 
-			<form action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" class="">
+			<!-- who is the form for -->
+			<label for="customer">Who are you signing up?</label><select id="customer" class="form-control" name="customer">
+					<option value="">----</option>
+					<option value="Me">Myself</option>
+					<option value="SO">Spouse/Significant Other</option>
+					<option value="Adult">Another Adult</option>
+					<option value="Child">Child</option>
+				</select><br>
+			<!-- displays rest of form as is necessary according to above js -->
+			<form id="registration" action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" class="">
 
 				<input class="form-control" type=hidden name="oid" value="00D630000008yyp">
 				<input class="form-control" type=hidden name="retURL" value="http://">
@@ -43,7 +92,7 @@
 				<label for="state">State/Province</label><input class="form-control" id="state" maxlength="20" name="state" size="20" type="text" /><br>
 
 				<label for="salutation">Salutation</label><select id="salutation" class="form-control" name="salutation">
-					<option value="">--None--</option>
+					<option value="None">--None--</option>
 					<option value="Mr.">Mr.</option>
 					<option value="Ms.">Ms.</option>
 					<option value="Mrs.">Mrs.</option>

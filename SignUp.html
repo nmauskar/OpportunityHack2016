@@ -9,67 +9,412 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 		<!-- script to hide/show different fields based on who is being registered -->
 		<script>
-		$(document).ready(function() {
-			$('#00N63000000at1f, #00N63000000at1a, #00N63000000at1Q, #00N63000000at1k, #00N63000000at1V, #00N63000000at16, #00N63000000at1B').change(function() {
-				var thisElement = $(this).next().next();
+			$(document).ready(function() {
+				$('#00N63000000atDM').val(Date.now());
 
-				if ($(this).prop('checked')) {
-					thisElement.show();
-				} else {
-					thisElement.hide();
-				}
-			});
+				$(window).bind("pageshow", function() {
+					// update hidden input field
+				});
 
-			$('#customer').change(function() {
-				/** @todo */
-				switch ($(this).val()) {
-					case 'Me':
-						$('#registration').show();
-						$('.Adult').hide();
-						$('.SO').hide
-						$('.Child').hide();
-						$('.Me').show();
-						break;
-					case 'SO':
-						$('#registration').show();
-						$('.Adult').hide();
-						$('.Child').hide();
-						$('.Me').hide();
-						$('.SO').show();
-						break;
-					case 'Adult':
-						$('#registration').show();
-						$('.Child').hide();
-						$('.Me').hide();
-						$('.SO').hide();
-						$('.Adult').show();
-						break;
-					case 'Child':
-						$('#registration').show();
-						$('.Adult').hide();
-						$('.SO').hide
-						$('.Me').hide();
-						$('.Child').show();
-						break;
-					default: $('#registration').hide(); break;
-				}
+				$('#00N63000000at1f, #00N63000000at1a, #00N63000000at1Q, #00N63000000at1k, #00N63000000at1V, #00N63000000at16, #00N63000000at1B').change(function() {
+					var thisElement = $(this).next().next();
+
+					if ($(this).prop('checked')) {
+						thisElement.show();
+					} else {
+						thisElement.hide();
+					}
+				});
+
+				$('#customer').change(function() {
+					var element;
+
+					switch ($(this).val()) {
+						case 'SO':
+							element = $('#registration-spouse').clone().show().attr('id', '');
+							break;
+						case 'Adult':
+							element = $('#registration-adult').clone().show().attr('id', '');
+							break;
+						case 'Child':
+							element = $('#registration-child').clone().show().attr('id', '');
+							break;
+					}
+
+					if (element) {
+						element.prepend($('hr'));
+
+						$('#additionalLeads').append(element);
+
+						$(this).val('none');
+
+						{
+							$('body').animate({ scrollTop: element.offset().top - 70 + 'px' });
+						}
+					}
+				});
 			});
-			$("#registration").hide();
-		});
 		</script>
 		<!-- end registration script -->
 		<style>
-		.navbar-left > img {
-			float: left !important;
-			width: 70px;
-			margin: 0px 15px;
-		}
-		body > .container {
-			margin-top: 80px;
-		}
+			.navbar-left > img {
+				float: left !important;
+				width: 70px;
+				margin: 0px 15px;
+			}
+			body > .container {
+				margin-top: 80px;
+			}
+			hr {
+				height: 5px !important;
+				background-color: rgb(176, 41, 47) !important;
+			}
 		</style>
 	</head>
 	<body>
+		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
+		<form id="registration-spouse" style="display: none;" action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+			<input type=hidden name="oid" value="00D630000008yyp">
+			<input type=hidden name="retURL" value="http://">
+			<input type="hidden" id="00N63000000atDM" name="00N63000000atDM">
+
+			<h4>Spouse or Significant Other Registration</h4> <br>
+
+			<label for="first_name">First Name</label>
+			<input id="first_name" maxlength="40" name="first_name" size="20" class="form-control" type="text" /><br>
+
+			<label for="last_name">Last Name</label>
+			<input id="last_name" maxlength="80" name="last_name" size="20" class="form-control" type="text" /><br>
+
+			<label for="birthdate">Birthdate</label>
+			<span class="dateInput dateOnlyInput">
+				<input id="00N63000000asvD" name="00N63000000asvD" size="12" class="form-control" type="text" />
+			</span>
+			<br>
+
+			<label for="gender">Gender</label>
+			<select class="form-control" id="00N63000000asv8" name="00N63000000asv8" title="Gender">
+				<option value="">--None--</option>
+				<option value="Male">Male</option>
+				<option value="Female">Female</option>
+				<option value="Transgender: Male to Female">Transgender: Male to Female</option>
+				<option value="Transgender: Female to Male">Transgender: Female to Male</option>
+				<option value="Not Collected">Not Collected</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+			</select><br>
+
+			<label for="race">What is this person's race or origin? Check ALL that apply</label><br>
+
+			Race: American Indian and Alaskan Native:
+			<input id="00N63000000asvI" name="00N63000000asvI" type="checkbox" value="1" /><br>
+
+			Race: Asian:
+			<input id="00N63000000asvN" name="00N63000000asvN" type="checkbox" value="1" /><br>
+
+			Race: Black or African American:
+			<input id="00N63000000asvS" name="00N63000000asvS" type="checkbox" value="1" /><br>
+
+			Race: Native Hawaiian (pacific islander):
+			<input id="00N63000000asvm" name="00N63000000asvm" type="checkbox" value="1" /><br>
+
+			Race: White:
+			<input id="00N63000000asvw" name="00N63000000asvw" type="checkbox" value="1" /><br>
+
+			Race: Other:
+			<input id="00N63000000asvr" name="00N63000000asvr" type="checkbox" value="1" /><br>
+
+			Race: I don&#39;t know:
+			<input id="00N63000000asvc" name="00N63000000asvc" type="checkbox" value="1" /><br>
+
+			Race: I prefer not to answer:
+			<input id="00N63000000asvh" name="00N63000000asvh" type="checkbox" value="1" /><br>
+			<br>
+
+			<label for="veteran">Has this person ever served in the U.S. military?</label>
+			<select class="form-control" id="00N63000000asut" name="00N63000000asut" title="US Veteran?">
+				<option value="">--None--</option>
+				<option value="No">No</option>
+				<option value="Yes">Yes</option>
+				<option value="I don&#39;t know">I don&#39;t know</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+			</select><br>
+
+			<label for="disability">Does this person have a disability?</label>
+			<select class="form-control"  id="00N63000000asv3" name="00N63000000asv3" title="Disability">
+				<option value="">--None--</option>
+				<option value="Yes">Yes</option>
+				<option value="No">No</option>
+				<option value="I don&#39;t know">I don&#39;t know</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+			</select><br>
+
+			<label for="healthInsurance">Does this person have health insurance?</label>
+			<select class="form-control"  id="00N63000000aswL" name="00N63000000aswL" title="Health Insurance">
+				<option value="">--None--</option>
+				<option value="Yes">Yes</option>
+				<option value="No">No</option>
+				<option value="I don&#39;t know">I don&#39;t know</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+			</select><br>
+
+			<label for="education">Highest Level of Education?</label>
+			<select class="form-control"  id="00N63000000aswa" name="00N63000000aswa" title="Highest Level of Education">
+				<option value="">--None--</option>
+				<option value="0-8">0-8</option>
+				<option value="9-12/Non-Graduate">9-12/Non-Graduate</option>
+				<option value="High School Graduate / GED Certificate">High School Graduate / GED Certificate</option>
+				<option value="12+ Some Post Secondary">12+ Some Post Secondary</option>
+				<option value="2-Yr College graduate">2-Yr College graduate</option>
+				<option value="4-Yr College graduate">4-Yr College graduate</option>
+				<option value="No Schooling">No Schooling</option>
+				<option value="I don&#39;t know">I don&#39;t know</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+				<option value="2 or 4 yr. College Graduate">2 or 4 yr. College Graduate</option>
+			</select><br>
+
+			<label for="employment">Currently Employed?</label>
+			<select class="form-control"  id="00N63000000aswk" name="00N63000000aswk" title="Currently Employed">
+				<option value="">--None--</option>
+				<option value="Yes">Yes</option>
+				<option value="No">No</option>
+			</select><br>
+		</form>
+
+		<form id="registration-adult" style="display: none;" action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+			<input type=hidden name="oid" value="00D630000008yyp">
+			<input type=hidden name="retURL" value="http://">
+			<input type="hidden" id="00N63000000atDM" name="00N63000000atDM">
+
+			<h4>Additional Adult Registration</h4> <br>
+
+			<label for="first_name">First Name</label>
+			<input id="first_name" maxlength="40" name="first_name" size="20" class="form-control" type="text" /><br>
+
+			<label for="last_name">Last Name</label>
+			<input id="last_name" maxlength="80" name="last_name" size="20" class="form-control" type="text" /><br>
+
+			<label for="birthdate">Birthdate</label>
+			<span class="dateInput dateOnlyInput">
+				<input id="00N63000000asvD" name="00N63000000asvD" size="12" class="form-control" type="text" />
+			</span>
+			<br>
+
+			<label for="gender">Gender</label>
+			<select class="form-control" id="00N63000000asv8" name="00N63000000asv8" title="Gender">
+				<option value="">--None--</option>
+				<option value="Male">Male</option>
+				<option value="Female">Female</option>
+				<option value="Transgender: Male to Female">Transgender: Male to Female</option>
+				<option value="Transgender: Female to Male">Transgender: Female to Male</option>
+				<option value="Not Collected">Not Collected</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+			</select><br>
+
+			<label for="relToAdult">Relationship to Primary Contact</label>
+			<select class="form-control"  id="00N63000000at45" name="00N63000000at45" title="Relationship to Primary Contact">
+				<option value="">--None--</option>
+				<option value="Spouse / Significant Other">Spouse / Significant Other</option>
+				<option value="Daughter">Daughter</option>
+				<option value="Son">Son</option>
+				<option value="Mother">Mother</option>
+				<option value="Father">Father</option>
+				<option value="Grandmother">Grandmother</option>
+				<option value="Grandfather">Grandfather</option>
+				<option value="Granddaughter">Granddaughter</option>
+				<option value="Grandson">Grandson</option>
+				<option value="Step-daughter">Step-daughter</option>
+				<option value="Step-son">Step-son</option>
+				<option value="Friend/Roommate">Friend/Roommate</option>
+				<option value="Other Relative">Other Relative</option>
+				<option value="Other Non-Relative">Other Non-Relative</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+			</select><br>
+
+			<label for="race">What is this person's race or origin? Check ALL that apply</label><br>
+
+			Race: American Indian and Alaskan Native:
+			<input id="00N63000000asvI" name="00N63000000asvI" type="checkbox" value="1" /><br>
+
+			Race: Asian:
+			<input id="00N63000000asvN" name="00N63000000asvN" type="checkbox" value="1" /><br>
+
+			Race: Black or African American:
+			<input id="00N63000000asvS" name="00N63000000asvS" type="checkbox" value="1" /><br>
+
+			Race: Native Hawaiian (pacific islander):
+			<input id="00N63000000asvm" name="00N63000000asvm" type="checkbox" value="1" /><br>
+
+			Race: White:
+			<input id="00N63000000asvw" name="00N63000000asvw" type="checkbox" value="1" /><br>
+
+			Race: Other:
+			<input id="00N63000000asvr" name="00N63000000asvr" type="checkbox" value="1" /><br>
+
+			Race: I don&#39;t know:
+			<input id="00N63000000asvc" name="00N63000000asvc" type="checkbox" value="1" /><br>
+
+			Race: I prefer not to answer:
+			<input id="00N63000000asvh" name="00N63000000asvh" type="checkbox" value="1" /><br>
+			<br>
+
+			<label for="veteran">Has this person ever served in the U.S. military?</label>
+			<select class="form-control" id="00N63000000asut" name="00N63000000asut" title="US Veteran?">
+				<option value="">--None--</option>
+				<option value="No">No</option>
+				<option value="Yes">Yes</option>
+				<option value="I don&#39;t know">I don&#39;t know</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+			</select><br>
+
+			<label for="disability">Does this person have a disability?</label>
+			<select class="form-control"  id="00N63000000asv3" name="00N63000000asv3" title="Disability">
+				<option value="">--None--</option>
+				<option value="Yes">Yes</option>
+				<option value="No">No</option>
+				<option value="I don&#39;t know">I don&#39;t know</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+			</select><br>
+
+			<label for="healthInsurance">Does this person have health insurance?</label>
+			<select class="form-control"  id="00N63000000aswL" name="00N63000000aswL" title="Health Insurance">
+				<option value="">--None--</option>
+				<option value="Yes">Yes</option>
+				<option value="No">No</option>
+				<option value="I don&#39;t know">I don&#39;t know</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+			</select><br>
+
+			<label for="education">Highest Level of Education?</label>
+			<select class="form-control"  id="00N63000000aswa" name="00N63000000aswa" title="Highest Level of Education">
+				<option value="">--None--</option>
+				<option value="0-8">0-8</option>
+				<option value="9-12/Non-Graduate">9-12/Non-Graduate</option>
+				<option value="High School Graduate / GED Certificate">High School Graduate / GED Certificate</option>
+				<option value="12+ Some Post Secondary">12+ Some Post Secondary</option>
+				<option value="2-Yr College graduate">2-Yr College graduate</option>
+				<option value="4-Yr College graduate">4-Yr College graduate</option>
+				<option value="No Schooling">No Schooling</option>
+				<option value="I don&#39;t know">I don&#39;t know</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+				<option value="2 or 4 yr. College Graduate">2 or 4 yr. College Graduate</option>
+			</select><br>
+
+			<label for="employment">Currently Employed?</label>
+			<select class="form-control"  id="00N63000000aswk" name="00N63000000aswk" title="Currently Employed">
+				<option value="">--None--</option>
+				<option value="Yes">Yes</option>
+				<option value="No">No</option>
+			</select><br>
+
+			<label for="income">If this person is employed, what is their monthly income?</label>
+			<input id="00N63000000at4A" name="00N63000000at4A" size="20" class="form-control" type="text" /><br>
+		</form>
+
+		<form id="registration-child" style="display: none;" action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+			<h4>Child Registration (17 yrs or younger)</h4> <br>
+
+			<input type=hidden name="oid" value="00D630000008yyp">
+			<input type=hidden name="retURL" value="http://">
+			<input type="hidden" id="00N63000000atDM" name="00N63000000atDM">
+
+			<label for="first_name">First Name</label>
+			<input id="first_name" maxlength="40" name="first_name" size="20" class="form-control" type="text" /><br>
+
+			<label for="last_name">Last Name</label>
+			<input id="last_name" maxlength="80" name="last_name" size="20" class="form-control" type="text" /><br>
+
+			<label for="birthdate">Birthdate</label>
+			<span class="dateInput dateOnlyInput">
+				<input id="00N63000000asvD" name="00N63000000asvD" size="12" class="form-control" type="text" />
+			</span>
+			<br>
+
+			<label for="gender">Gender</label>
+			<select class="form-control" id="00N63000000asv8" name="00N63000000asv8" title="Gender">
+				<option value="">--None--</option>
+				<option value="Male">Male</option>
+				<option value="Female">Female</option>
+				<option value="Transgender: Male to Female">Transgender: Male to Female</option>
+				<option value="Transgender: Female to Male">Transgender: Female to Male</option>
+				<option value="Not Collected">Not Collected</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+			</select><br>
+
+			<label for="relToAdult">Relationship to Primary Contact</label>
+			<select class="form-control"  id="00N63000000at45" name="00N63000000at45" title="Relationship to Primary Contact">
+				<option value="">--None--</option>
+				<option value="Daughter">Daughter</option>
+				<option value="Son">Son</option>
+				<option value="Granddaughter">Granddaughter</option>
+				<option value="Grandson">Grandson</option>
+				<option value="Step-daughter">Step-daughter</option>
+				<option value="Step-son">Step-son</option>
+				<option value="Other Relative">Other Relative</option>
+				<option value="Other Non-Relative">Other Non-Relative</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+			</select><br>
+
+			<label for="race">What is this person's race or origin? Check ALL that apply</label><br>
+
+			Race: American Indian and Alaskan Native:
+			<input id="00N63000000asvI" name="00N63000000asvI" type="checkbox" value="1" /><br>
+
+			Race: Asian:
+			<input id="00N63000000asvN" name="00N63000000asvN" type="checkbox" value="1" /><br>
+
+			Race: Black or African American:
+			<input id="00N63000000asvS" name="00N63000000asvS" type="checkbox" value="1" /><br>
+
+			Race: Native Hawaiian (pacific islander):
+			<input id="00N63000000asvm" name="00N63000000asvm" type="checkbox" value="1" /><br>
+
+			Race: White:
+			<input id="00N63000000asvw" name="00N63000000asvw" type="checkbox" value="1" /><br>
+
+			Race: Other:
+			<input id="00N63000000asvr" name="00N63000000asvr" type="checkbox" value="1" /><br>
+
+			Race: I don&#39;t know:
+			<input id="00N63000000asvc" name="00N63000000asvc" type="checkbox" value="1" /><br>
+
+			Race: I prefer not to answer:
+			<input id="00N63000000asvh" name="00N63000000asvh" type="checkbox" value="1" /><br>
+			<br>
+
+			<label for="disability">Does this person have a disability?</label>
+			<select class="form-control"  id="00N63000000asv3" name="00N63000000asv3" title="Disability">
+				<option value="">--None--</option>
+				<option value="Yes">Yes</option>
+				<option value="No">No</option>
+				<option value="I don&#39;t know">I don&#39;t know</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+			</select><br>
+
+			<label for="healthInsurance">Does this person have health insurance?</label>
+			<select class="form-control"  id="00N63000000aswL" name="00N63000000aswL" title="Health Insurance">
+				<option value="">--None--</option>
+				<option value="Yes">Yes</option>
+				<option value="No">No</option>
+				<option value="I don&#39;t know">I don&#39;t know</option>
+				<option value="I prefer not to answer">I prefer not to answer</option>
+			</select><br>
+
+			<label for="employment">Currently Employed?</label>
+			<select class="form-control"  id="00N63000000aswk" name="00N63000000aswk" title="Currently Employed">
+				<option value="">--None--</option>
+				<option value="Yes">Yes</option>
+				<option value="No">No</option>
+			</select><br>
+		</form>
+
+
+		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
@@ -92,20 +437,11 @@
 			<!-- Google Translate End -->
 			<br>
 
-			<!-- who is the form for -->
-			<label for="customer">Who are you signing up?</label>
-			<select class="form-control" id="customer" name="customer">
-				<option value="" selected="selected">----</option>
-				<option value="Me">Myself</option>
-				<option value="SO">Spouse/Significant Other</option>
-				<option value="Adult">Another Adult</option>
-				<option value="Child">Child</option>
-			</select><br>
-
 			<!-- actual form -->
 			<form id="registration" action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
 				<input type=hidden name="oid" value="00D630000008yyp">
 				<input type=hidden name="retURL" value="http://">
+				<input type="hidden" id="00N63000000atDM" name="00N63000000atDM">
 
 				<!-- ---------------------------------------------------------------------- -->
 				<!-- NOTE: These fields are optional debugging elements. Please uncomment  -->
@@ -142,7 +478,6 @@
 					<label for="relToAdult">Relationship to Primary Contact</label>
 					<select class="form-control"  id="00N63000000at45" name="00N63000000at45" title="Relationship to Primary Contact">
 						<option value="">--None--</option>
-						<option value="Primary">Primary</option>
 						<option value="Spouse / Significant Other">Spouse / Significant Other</option>
 						<option value="Daughter">Daughter</option>
 						<option value="Son">Son</option>
@@ -452,9 +787,21 @@
 						<option value="OTHER (let staff know what language was not represented in list)">OTHER (let staff know what language was not represented in list)</option>
 					</select><br>
 				</div>
-
-				<input type="submit" name="submit">
 			</form>
+
+			<div id="additionalLeads"></div>
+
+			<!-- who is the form for -->
+			<label for="customer">Do you want to sign up another person?</label>
+			<select class="form-control" id="customer" name="customer">
+				<option value="none" selected="selected">----</option>
+				<option value="SO">Spouse/Significant Other</option>
+				<option value="Adult">Another Adult</option>
+				<option value="Child">Child</option>
+			</select><br>
+
+			<input type="submit" name="submit">
+			<br><br><br><br>
 		</div>
 	</body>
 </html>

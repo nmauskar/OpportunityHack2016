@@ -9,10 +9,8 @@
 		<script type="text/javascript" src="validator.min.js"></script>
 		<!-- script to hide/show different fields based on who is being registered -->
 		<script>
-			var formsLeft = 0;
 			function submitForms(event) {
 				var forms = $('form.form-open');
-				formsLeft = forms.length;
 
 				forms.each(function() {
 					var form = $(this),
@@ -32,7 +30,7 @@
 					});
 				});
 
-				alert('Done!');
+				window.location.reload();
 			}
 
 			$.fn.serializeObject = function serializeObject() {
@@ -52,7 +50,7 @@
 			};
 
 			$(document).ready(function() {
-				$('#00N63000000atDM').val(Date.now());
+				$('.hh_id').val(Date.now());
 
 				$(window).bind("pageshow", function() {
 					// update hidden input field
@@ -84,7 +82,7 @@
 					}
 
 					if (element) {
-						element.show().attr('id', '').addClass('form-open').prepend($('hr'));
+						element.show().attr('id', '').addClass('form-open');
 
 						$('#additionalLeads').append(element);
 
@@ -138,7 +136,7 @@
 		<form data-toggle="validator" role="form" id="registration-spouse" style="display: none;" action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
 			<input type=hidden name="oid" value="00D630000008yyp">
 			<input type=hidden name="retURL" value="http://">
-			<input type="hidden" id="00N63000000atDM" name="00N63000000atDM">
+			<input type="hidden" class="hh_id" id="00N63000000atDM" name="00N63000000atDM">
 
 			<h4>Spouse or Significant Other Registration</h4> <br>
 
@@ -228,7 +226,7 @@
 		<form data-toggle="validator" role="form" id="registration-adult" style="display: none;" action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
 			<input type=hidden name="oid" value="00D630000008yyp">
 			<input type=hidden name="retURL" value="http://">
-			<input type="hidden" id="00N63000000atDM" name="00N63000000atDM">
+			<input type="hidden" class="hh_id" id="00N63000000atDM" name="00N63000000atDM">
 
 			<h4>Additional Adult Registration</h4> <br>
 
@@ -342,7 +340,7 @@
 
 			<input type=hidden name="oid" value="00D630000008yyp">
 			<input type=hidden name="retURL" value="http://">
-			<input type="hidden" id="00N63000000atDM" name="00N63000000atDM">
+			<input type="hidden" class="hh_id" id="00N63000000atDM" name="00N63000000atDM">
 
 			<label for="first_name">First Name</label>
 			<div class="form-group">
@@ -447,7 +445,7 @@
 			<form data-toggle="validator" role="form" class="form-open" id="registration" action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
 				<input type=hidden name="oid" value="00D630000008yyp">
 				<input type=hidden name="retURL" value="http://">
-				<input type="hidden" id="00N63000000atDM" name="00N63000000atDM">
+				<input type="hidden" class="hh_id" id="00N63000000atDM" name="00N63000000atDM">
 
 				<!-- ---------------------------------------------------------------------- -->
 				<!-- NOTE: These fields are optional debugging elements. Please uncomment -->

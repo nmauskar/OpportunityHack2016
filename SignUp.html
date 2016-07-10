@@ -13,11 +13,35 @@
 			$('#customer').change(function() {
 				/** @todo */
 				switch ($(this).val()) {
-					case 'Me': $('#registration').show(); break;
-					case 'SO': $('#registration').show(); break;
-					case 'Adult': $('#registration').show(); break;
-					case 'Child': $('#registration').show(); break;
-					default: $('#registration').show(); break;
+					case 'Me': 
+						$('#registration').show();
+						$('.Adult').hide();
+						$('.SO').hide
+						$('.Child').hide();
+						$('.Me').show(); 
+						break;
+					case 'SO': 
+						$('#registration').show(); 
+						$('.Adult').hide();
+						$('.Child').hide();
+						$('.Me').hide(); 
+						$('.SO').show();
+						break;
+					case 'Adult': 
+						$('#registration').show(); 
+						$('.Child').hide();
+						$('.Me').hide(); 
+						$('.SO').hide();
+						$('.Adult').show();
+						break;
+					case 'Child': 
+						$('#registration').show();
+						$('.Adult').hide();
+						$('.SO').hide
+						$('.Me').hide(); 
+						$('.Child').show();
+						break;
+					default: $('#registration').hide(); break;
 				}
 			});
 			$("#registration").hide();
@@ -61,7 +85,7 @@
 			<!-- who is the form for -->
 			<label for="customer">Who are you signing up?</label>
 			<select class="form-control"  id="customer" name="customer">
-				<option value="">----</option>
+				<option value="" selected="selected">----</option>
 				<option value="Me">Myself</option>
 				<option value="SO">Spouse/Significant Other</option>
 				<option value="Adult">Another Adult</option>
@@ -79,20 +103,20 @@
 				<input type="hidden" name="debug" value=1>
 				<input type="hidden" name="debugEmail" value="developer@sacredheartcs.org">
 				<!--  ----------------------------------------------------------------------  -->
-				
+								
 				<label for="first_name">First Name</label>
 				<input  id="first_name" maxlength="40" name="first_name" size="20" class="form-control" type="text" /><br>
 				
 				<label for="last_name">Last Name</label>
 				<input  id="last_name" maxlength="80" name="last_name" size="20" class="form-control" type="text" /><br>
-				
-				Birthdate:
+
+				<label for="birthdate">Birthdate</label>
 				<span class="dateInput dateOnlyInput">
 					<input  id="00N63000000asvD" name="00N63000000asvD" size="12" class="form-control" type="text" />
 				</span>
 				<br>
 				
-				Gender:
+				<label for="gender">Gender</label>
 				<select class="form-control" id="00N63000000asv8" name="00N63000000asv8" title="Gender">
 					<option value="">--None--</option>
 					<option value="Male">Male</option>
@@ -103,27 +127,32 @@
 					<option value="I prefer not to answer">I prefer not to answer</option>
 				</select><br>
 				
-				Relationship to Primary Contact:
-				<select class="form-control"   id="00N63000000at45" name="00N63000000at45" title="Relationship to Primary Contact">
-					<option value="">--None--</option>
-					<option value="Primary">Primary</option>
-					<option value="Spouse / Significant Other">Spouse / Significant Other</option>
-					<option value="Daughter">Daughter</option>
-					<option value="Son">Son</option>
-					<option value="Mother">Mother</option>
-					<option value="Father">Father</option>
-					<option value="Grandmother">Grandmother</option>
-					<option value="Grandfather">Grandfather</option>
-					<option value="Granddaughter">Granddaughter</option>
-					<option value="Grandson">Grandson</option>
-					<option value="Step-daughter">Step-daughter</option>
-					<option value="Step-son">Step-son</option>
-					<option value="Friend/Roommate">Friend/Roommate</option>
-					<option value="Other Relative">Other Relative</option>
-					<option value="Other Non-Relative">Other Non-Relative</option>
-					<option value="I prefer not to answer">I prefer not to answer</option>
-				</select><br>
+				<!-- only for registering additional adult -->
+				<div class="Adult">
+					<label for="relToAdult">Relationship to Primary Contact</label>
+					<select class="form-control"   id="00N63000000at45" name="00N63000000at45" title="Relationship to Primary Contact">
+						<option value="">--None--</option>
+						<option value="Primary">Primary</option>
+						<option value="Spouse / Significant Other">Spouse / Significant Other</option>
+						<option value="Daughter">Daughter</option>
+						<option value="Son">Son</option>
+						<option value="Mother">Mother</option>
+						<option value="Father">Father</option>
+						<option value="Grandmother">Grandmother</option>
+						<option value="Grandfather">Grandfather</option>
+						<option value="Granddaughter">Granddaughter</option>
+						<option value="Grandson">Grandson</option>
+						<option value="Step-daughter">Step-daughter</option>
+						<option value="Step-son">Step-son</option>
+						<option value="Friend/Roommate">Friend/Roommate</option>
+						<option value="Other Relative">Other Relative</option>
+						<option value="Other Non-Relative">Other Non-Relative</option>
+						<option value="I prefer not to answer">I prefer not to answer</option>
+					</select><br>
+				</div>
 				
+				<label for="race">What is this person's race or origin? Check ALL that apply</label><br>
+
 				Race: American Indian and Alaskan Native:
 				<input  id="00N63000000asvI" name="00N63000000asvI" type="checkbox" value="1" /><br>
 				
@@ -147,17 +176,20 @@
 				
 				Race: I prefer not to answer:
 				<input  id="00N63000000asvh" name="00N63000000asvh" type="checkbox" value="1" /><br>
+				<br>
+
+				<div class="Me SO Adult">
+					<label for="veteran">Has this person ever served in the U.S. military?</label>
+					<select class="form-control"  id="00N63000000asut" name="00N63000000asut" title="US Veteran?">
+						<option value="">--None--</option>
+						<option value="No">No</option>
+						<option value="Yes">Yes</option>
+						<option value="I don&#39;t know">I don&#39;t know</option>
+						<option value="I prefer not to answer">I prefer not to answer</option>
+					</select><br>
+				</div>
 				
-				US Veteran?:
-				<select class="form-control"  id="00N63000000asut" name="00N63000000asut" title="US Veteran?">
-					<option value="">--None--</option>
-					<option value="No">No</option>
-					<option value="Yes">Yes</option>
-					<option value="I don&#39;t know">I don&#39;t know</option>
-					<option value="I prefer not to answer">I prefer not to answer</option>
-				</select><br>
-				
-				Disability:
+				<label for="disability">Does this person have a disability?</label>
 				<select class="form-control"   id="00N63000000asv3" name="00N63000000asv3" title="Disability">
 					<option value="">--None--</option>
 					<option value="Yes">Yes</option>
@@ -166,7 +198,7 @@
 					<option value="I prefer not to answer">I prefer not to answer</option>
 				</select><br>
 
-				Health Insurance:
+				<label for="healthInsurance">Does this person have health insurance?</label>
 				<select class="form-control"    id="00N63000000aswL" name="00N63000000aswL" title="Health Insurance">
 					<option value="">--None--</option>
 					<option value="Yes">Yes</option>
@@ -175,229 +207,241 @@
 					<option value="I prefer not to answer">I prefer not to answer</option>
 				</select><br>
 
-				Highest Level of Education:
-				<select class="form-control"   id="00N63000000aswa" name="00N63000000aswa" title="Highest Level of Education">
-					<option value="">--None--</option>
-					<option value="0-8">0-8</option>
-					<option value="9-12/Non-Graduate">9-12/Non-Graduate</option>
-					<option value="High School Graduate / GED Certificate">High School Graduate / GED Certificate</option>
-					<option value="12+ Some Post Secondary">12+ Some Post Secondary</option>
-					<option value="2-Yr College graduate">2-Yr College graduate</option>
-					<option value="4-Yr College graduate">4-Yr College graduate</option>
-					<option value="No Schooling">No Schooling</option>
-					<option value="I don&#39;t know">I don&#39;t know</option>
-					<option value="I prefer not to answer">I prefer not to answer</option>
-					<option value="2 or 4 yr. College Graduate">2 or 4 yr. College Graduate</option>
-				</select><br>
+				<div class="Me SO Adult">
+					<label for="education">Highest Level of Education?</label>
+					<select class="form-control"   id="00N63000000aswa" name="00N63000000aswa" title="Highest Level of Education">
+						<option value="">--None--</option>
+						<option value="0-8">0-8</option>
+						<option value="9-12/Non-Graduate">9-12/Non-Graduate</option>
+						<option value="High School Graduate / GED Certificate">High School Graduate / GED Certificate</option>
+						<option value="12+ Some Post Secondary">12+ Some Post Secondary</option>
+						<option value="2-Yr College graduate">2-Yr College graduate</option>
+						<option value="4-Yr College graduate">4-Yr College graduate</option>
+						<option value="No Schooling">No Schooling</option>
+						<option value="I don&#39;t know">I don&#39;t know</option>
+						<option value="I prefer not to answer">I prefer not to answer</option>
+						<option value="2 or 4 yr. College Graduate">2 or 4 yr. College Graduate</option>
+					</select><br>
+				</div>
 
-				Currently Employed:
+				<label for="employment">Currently Employed?</label>
 				<select class="form-control"   id="00N63000000aswk" name="00N63000000aswk" title="Currently Employed">
 					<option value="">--None--</option>
 					<option value="Yes">Yes</option>
 					<option value="No">No</option>
 				</select><br>
 
-				Contact Employment Income:
-				<input  id="00N63000000at4A" name="00N63000000at4A" size="20" class="form-control" type="text" /><br>
-				
-				Domestic Violence:
-				<select class="form-control"   id="00N63000000asxi" name="00N63000000asxi" title="Domestic Violence">
-					<option value="">--None--</option>
-					<option value="Yes">Yes</option>
-					<option value="No">No</option>
-					<option value="I don&#39;t know">I don&#39;t know</option>
-					<option value="I prefer not to answer">I prefer not to answer</option>
-				</select><br>
+				<div class="Me Adult">
+					<label for="income">If this person is employed, what is their monthly income?</label>
+					<input  id="00N63000000at4A" name="00N63000000at4A" size="20" class="form-control" type="text" /><br>
+				</div>
 
-				Domestic Violence: If so, when:
-				<select class="form-control"   id="00N63000000asy2" name="00N63000000asy2" title="Domestic Violence: If so, when">
-					<option value="">--None--</option>
-					<option value="Within the past three months">Within the past three months</option>
-					<option value="3-6 months">3-6 months</option>
-					<option value="6 months to 1 year">6 months to 1 year</option>
-					<option value="1 year or more">1 year or more</option>
-					<option value="I don&#39;t know">I don&#39;t know</option>
-					<option value="I prefer not to answer">I prefer not to answer</option>
-				</select><br>
+				<div class="Me">
+					<label for="domesticViolence">Are you now or have you ever been in a relationship where you were either physically or emotionally hurt, threatened, or made to feel afraid?</label>
+						<select class="form-control"   id="00N63000000asxi" name="00N63000000asxi" title="Domestic Violence">
+						<option value="">--None--</option>
+						<option value="Yes">Yes</option>
+						<option value="No">No</option>
+						<option value="I don&#39;t know">I don&#39;t know</option>
+						<option value="I prefer not to answer">I prefer not to answer</option>
+					</select><br>
 
-				Domestic Violence: Outreach:
-				<select class="form-control"   id="00N63000000asyC" name="00N63000000asyC" title="Domestic Violence: Outreach">
-					<option value="">--None--</option>
-					<option value="No">No</option>
-					<option value="Yes">Yes</option>
-				</select><br>
+					<label for="domesticViolenceTime">If so, when?</label>
+					<select class="form-control"   id="00N63000000asy2" name="00N63000000asy2" title="Domestic Violence: If so, when">
+						<option value="">--None--</option>
+						<option value="Within the past three months">Within the past three months</option>
+						<option value="3-6 months">3-6 months</option>
+						<option value="6 months to 1 year">6 months to 1 year</option>
+						<option value="1 year or more">1 year or more</option>
+						<option value="I don&#39;t know">I don&#39;t know</option>
+						<option value="I prefer not to answer">I prefer not to answer</option>
+					</select><br>
 
-				Home Phone:
-				<input  id="00N63000000asyR" maxlength="40" name="00N63000000asyR" onkeydown="formatPhoneOnEnter(this, event);" size="20" class="form-control" type="text" />
-				<br>
+					<label for="domesticViolenceOutreach">Are you interested in recieving information or speaking to smoeone about this relationship?</label>
+					<select class="form-control"   id="00N63000000asyC" name="00N63000000asyC" title="Domestic Violence: Outreach">
+						<option value="">--None--</option>
+						<option value="No">No</option>
+						<option value="Yes">Yes</option>
+					</select><br>
 
-				<label for="mobile">Mobile</label>
-				<input  id="mobile" maxlength="40" name="mobile" size="20" class="form-control" type="text" />
-				<br>
 
-				<label for="email">Email</label>
-				<input  id="email" maxlength="80" name="email" size="20" class="form-control" type="text" />
-				<br>
+					<label for="homePhone">Home Phone</label>
+					<input  id="00N63000000asyR" maxlength="40" name="00N63000000asyR" onkeydown="formatPhoneOnEnter(this, event);" size="20" class="form-control" type="text" />
+					<br>
 
-				May We Contact You:
-				<select class="form-control"   id="00N63000000asyb" name="00N63000000asyb" title="May We Contact You">
-					<option value="">--None--</option>
-					<option value="Yes">Yes</option>
-					<option value="No">No</option>
-				</select><br>
+					<label for="mobile">Cell Phone</label>
+					<input  id="mobile" maxlength="40" name="mobile" size="20" class="form-control" type="text" />
+					<br>
 
-				Preferred Contact: Email:
-				<input  id="00N63000000asyg" name="00N63000000asyg" type="checkbox" value="1" />
-				<br>
-				
-				Preferred Contact: Home Phone:
-				<input  id="00N63000000asyl" name="00N63000000asyl" type="checkbox" value="1" />
-				<br>
-				
-				Preferred Contact: Mobile Phone:
-				<input  id="00N63000000asyq" name="00N63000000asyq" type="checkbox" value="1" />
-				<br>
+					<label for="email">Email</label>
+					<input  id="email" maxlength="80" name="email" size="20" class="form-control" type="text" />
+					<br>
 
-				Household Type:
-				<select class="form-control"   id="00N63000000aszA" name="00N63000000aszA" title="Household Type">
-					<option value="">--None--</option>
-					<option value="Single Parent/Female">Single Parent/Female</option>
-					<option value="Single Parent/Male">Single Parent/Male</option>
-					<option value="Two-parent household">Two-parent household</option>
-					<option value="Single Person">Single Person</option>
-					<option value="Two Adults - No children">Two Adults - No children</option>
-					<option value="Other">Other</option>
-					<option value="I prefer not to answer">I prefer not to answer</option>
-				</select><br>
+					<label for="contact">May we contact you to provide you information and occasional updates about SHCS?</label>
+					<select class="form-control"   id="00N63000000asyb" name="00N63000000asyb" title="May We Contact You">
+						<option value="">--None--</option>
+						<option value="Yes">Yes</option>
+						<option value="No">No</option>
+					</select><br>
 
-				<label for="street">Street</label>
-				<textarea class="form-control" name="street"></textarea>
-				<br>
+					<label for="contactMethod">If you answered yes to the above, how would you like to be contactd?</label><br>
+					Preferred Contact: Email:
+					<input  id="00N63000000asyg" name="00N63000000asyg" type="checkbox" value="1" />
+					<br>
+					
+					Preferred Contact: Home Phone:
+					<input  id="00N63000000asyl" name="00N63000000asyl" type="checkbox" value="1" />
+					<br>
+					
+					Preferred Contact: Mobile Phone:
+					<input  id="00N63000000asyq" name="00N63000000asyq" type="checkbox" value="1" />
+					<br>
+					<br>
 
-				<label for="city">City</label>
-				<input  id="city" maxlength="40" name="city" size="20" class="form-control" type="text" />
-				<br>
+					<label for="householdType">Household Type</label>
+					<select class="form-control"   id="00N63000000aszA" name="00N63000000aszA" title="Household Type">
+						<option value="">--None--</option>
+						<option value="Single Parent/Female">Single Parent/Female</option>
+						<option value="Single Parent/Male">Single Parent/Male</option>
+						<option value="Two-parent household">Two-parent household</option>
+						<option value="Single Person">Single Person</option>
+						<option value="Two Adults - No children">Two Adults - No children</option>
+						<option value="Other">Other</option>
+						<option value="I prefer not to answer">I prefer not to answer</option>
+					</select><br>
 
-				<label for="state">State/Province</label>
-				<input  id="state" maxlength="20" name="state" size="20" class="form-control" type="text" />
-				<br>
+					<label for="street">Street</label>
+					<textarea class="form-control" name="street"></textarea>
+					<br>
 
-				<label for="zip">Zip</label>
-				<input  id="zip" maxlength="20" name="zip" size="20" class="form-control" type="text" />
-				<br>
+					<label for="city">City</label>
+					<input  id="city" maxlength="40" name="city" size="20" class="form-control" type="text" />
+					<br>
 
-				<label for="country">Country</label>
-				<input  id="country" maxlength="40" name="country" size="20" class="form-control" type="text" />
-				<br>
+					<label for="state">State/Province</label>
+					<input  id="state" maxlength="20" name="state" size="20" class="form-control" type="text" />
+					<br>
 
-				Housing Status:
-				<select class="form-control"   id="00N63000000aszK" name="00N63000000aszK" title="Housing Status">
-					<option value="">--None--</option>
-					<option value="I own: House">I own: House</option>
-					<option value="I own: Mobile Home">I own: Mobile Home</option>
-					<option value="I own: Condo">I own: Condo</option>
-					<option value="I rent: House">I rent: House</option>
-					<option value="I rent: Apartment">I rent: Apartment</option>
-					<option value="I rent: Mobile Home">I rent: Mobile Home</option>
-					<option value="I rent: Room">I rent: Room</option>
-					<option value="I am stably living with: Family">I am stably living with: Family</option>
-					<option value="I am stably living with: Friends">I am stably living with: Friends</option>
-					<option value="I am stably living with: Other">I am stably living with: Other</option>
-					<option value="I am temporarily staying at: Family&#39;s">I am temporarily staying at: Family&#39;s</option>
-					<option value="I am temporarily staying at: Friend&#39;s">I am temporarily staying at: Friend&#39;s</option>
-					<option value="I am temporarily staying at: Shelter">I am temporarily staying at: Shelter</option>
-					<option value="I am temporarily staying at: Hotel">I am temporarily staying at: Hotel</option>
-					<option value="I am temporarily staying at: Other">I am temporarily staying at: Other</option>
-					<option value="I am living in a: Car">I am living in a: Car</option>
-					<option value="I am living in a: Outside">I am living in a: Outside</option>
-					<option value="I am living in a: Place not meant for human habitation">I am living in a: Place not meant for human habitation</option>
-					<option value="Other">Other</option>
-					<option value="I prefer not to answer">I prefer not to answer</option>
-				</select><br>
+					<label for="zip">Zip</label>
+					<input  id="zip" maxlength="20" name="zip" size="20" class="form-control" type="text" />
+					<br>
 
-				Housing Status: Other:
-				<input  id="00N63000000aszZ" maxlength="60" name="00N63000000aszZ" size="20" class="form-control" type="text" />
-				<br>
+					<label for="country">Country</label>
+					<input  id="country" maxlength="40" name="country" size="20" class="form-control" type="text" />
+					<br>
 
-				Housing Status Length:
-				<input  id="00N63000000at4K" name="00N63000000at4K" size="20" class="form-control" type="text" />
-				<br>
+					<label for="HounsingStatus">Housing Status</label>
+					<select class="form-control"   id="00N63000000aszK" name="00N63000000aszK" title="Housing Status">
+						<option value="">--None--</option>
+						<option value="I own: House">I own: House</option>
+						<option value="I own: Mobile Home">I own: Mobile Home</option>
+						<option value="I own: Condo">I own: Condo</option>
+						<option value="I rent: House">I rent: House</option>
+						<option value="I rent: Apartment">I rent: Apartment</option>
+						<option value="I rent: Mobile Home">I rent: Mobile Home</option>
+						<option value="I rent: Room">I rent: Room</option>
+						<option value="I am stably living with: Family">I am stably living with: Family</option>
+						<option value="I am stably living with: Friends">I am stably living with: Friends</option>
+						<option value="I am stably living with: Other">I am stably living with: Other</option>
+						<option value="I am temporarily staying at: Family&#39;s">I am temporarily staying at: Family&#39;s</option>
+						<option value="I am temporarily staying at: Friend&#39;s">I am temporarily staying at: Friend&#39;s</option>
+						<option value="I am temporarily staying at: Shelter">I am temporarily staying at: Shelter</option>
+						<option value="I am temporarily staying at: Hotel">I am temporarily staying at: Hotel</option>
+						<option value="I am temporarily staying at: Other">I am temporarily staying at: Other</option>
+						<option value="I am living in a: Car">I am living in a Car</option>
+						<option value="I am living in a: Outside">I am living Outside</option>
+						<option value="I am living in a: Place not meant for human habitation">I am living in a place not meant for human habitation</option>
+						<option value="Other">Other</option>
+						<option value="I prefer not to answer">I prefer not to answer</option>
+					</select><br>
 
-				Housing Subsidy: Section 8:
-				<input  id="00N63000000at0m" name="00N63000000at0m" type="checkbox" value="1" />
-				<br>
+					<label for="housholdOther">If you selected other can you please explain your situation?</label>
+					<input  id="00N63000000aszZ" maxlength="60" name="00N63000000aszZ" size="20" class="form-control" type="text" />
+					<br>
 
-				Housing Subsidy: Affdble Hsing Dev:
-				<input  id="00N63000000at03" name="00N63000000at03" type="checkbox" value="1" />
-				<br>
+					<label for="housholdYears">How long have you been living in your current situation? (Years)</label>
+					<input  id="00N63000000at4K" name="00N63000000at4K" size="20" class="form-control" type="text" />
+					<br>
 
-				Housing Subsidy: Friends or Family:
-				<input  id="00N63000000at08" name="00N63000000at08" type="checkbox" value="1" />
-				<br>
+					<label for="HousingSubsidies">Does anyone in your household recieve a subsidy or assistance to help pay rent? Check all that apply</label><br>
+					Section 8:
+					<input  id="00N63000000at0m" name="00N63000000at0m" type="checkbox" value="1" />
+					<br>
 
-				Housing Subsidy: Other:
-				<input  id="00N63000000at0h" name="00N63000000at0h" type="checkbox" value="1" />
-				<br>
+					Affordable Housing Development:
+					<input  id="00N63000000at03" name="00N63000000at03" type="checkbox" value="1" />
+					<br>
 
-				Housing Subsidy: No:
-				<input  id="00N63000000at0c" name="00N63000000at0c" type="checkbox" value="1" />
-				<br>
+					Friends or Family:
+					<input  id="00N63000000at08" name="00N63000000at08" type="checkbox" value="1" />
+					<br>
 
-				Housing Subsidy: I don&#39;t know:
-				<input  id="00N63000000at4P" name="00N63000000at4P" type="checkbox" value="1" />
-				<br>
+					Other:
+					<input  id="00N63000000at0h" name="00N63000000at0h" type="checkbox" value="1" />
+					<br>
 
-				Housing Subsidy: I prefer not to answer:
-				<input  id="00N63000000at0X" name="00N63000000at0X" type="checkbox" value="1" />
-				<br>
+					No Subsidies:
+					<input  id="00N63000000at0c" name="00N63000000at0c" type="checkbox" value="1" />
+					<br>
 
-				HH member receiving income?:
-				<select class="form-control"   id="00N63000000at0w" name="00N63000000at0w" title="HH member receiving income?">
-					<option value="">--None--</option>
-					<option value="Yes">Yes</option>
-					<option value="No">No</option>
-					<option value="I don&#39;t know">I don&#39;t know</option>
-					<option value="I prefer not to answer">I prefer not to answer</option>
-				</select><br>
+					I don&#39;t know:
+					<input  id="00N63000000at4P" name="00N63000000at4P" type="checkbox" value="1" />
+					<br>
 
-				Income: TANF/CalWorks:<input  id="00N63000000at1f" name="00N63000000at1f" type="checkbox" value="1" /><br>
-				Income Source: TANF / CalWORKS:<input  id="00N63000000at2J" name="00N63000000at2J" size="20" class="form-control" type="text" /><br>
-				Income: SSI:<input  id="00N63000000at1a" name="00N63000000at1a" type="checkbox" value="1" /><br>
-				Income Source: SSI (Supmntl Sec Inc):<input  id="00N63000000at2E" name="00N63000000at2E" size="20" class="form-control" type="text" /><br>
-				Income: Pension:<input  id="00N63000000at1Q" name="00N63000000at1Q" type="checkbox" value="1" /><br>
-				Income Source: Pension (Retirement):<input  id="00N63000000at24" name="00N63000000at24" size="20" class="form-control" type="text" /><br>
-				Income: Unemployement:<input  id="00N63000000at1k" name="00N63000000at1k" type="checkbox" value="1" /><br>
-				Income Source: Unemployment (EDD):<input  id="00N63000000at2O" name="00N63000000at2O" size="20" class="form-control" type="text" /><br>
-				Income: SSDI:<input  id="00N63000000at1V" name="00N63000000at1V" type="checkbox" value="1" /><br>
-				Income Source: SSDI (Soc Sec Dis Insnc):<input  id="00N63000000at29" name="00N63000000at29" size="20" class="form-control" type="text" /><br>
-				Income: GA:<input  id="00N63000000at16" name="00N63000000at16" type="checkbox" value="1" /><br>
-				Income Source: General Assistance:<input  id="00N63000000at1u" name="00N63000000at1u" size="20" class="form-control" type="text" /><br>
-				Income: Other:<input  id="00N63000000at1B" name="00N63000000at1B" type="checkbox" value="1" /><br>
-				Income Source: Other:<input  id="00N63000000at1z" name="00N63000000at1z" size="20" class="form-control" type="text" /><br>
-				Benefits: CalFresh (Food Stamps):<input  id="00N63000000at2i" name="00N63000000at2i" type="checkbox" value="1" /><br>
-				Benefits: WIC:<input  id="00N63000000at32" name="00N63000000at32" type="checkbox" value="1" /><br>
-				Benefits: MediCare:<input  id="00N63000000at2x" name="00N63000000at2x" type="checkbox" value="1" /><br>
-				Benefits: MediCal:<input  id="00N63000000at2s" name="00N63000000at2s" type="checkbox" value="1" /><br>
-				Benefits: Other:<input  id="00N63000000at4Z" name="00N63000000at4Z" type="checkbox" value="1" /><br>
-				Benefits: I prefer not to answer:<input  id="00N63000000at2n" name="00N63000000at2n" type="checkbox" value="1" /><br>
-				Benefits: None of the above:<input  id="00N63000000at3M" name="00N63000000at3M" type="checkbox" value="1" /><br>
-				Benefits: I don&#39;t know:<input  id="00N63000000at4U" name="00N63000000at4U" type="checkbox" value="1" /><br>
+					I prefer not to answer:
+					<input  id="00N63000000at0X" name="00N63000000at0X" type="checkbox" value="1" />
+					<br><br>
 
-				Preferred Language for Household:
-				<select class="form-control"   id="00N63000000at4F" name="00N63000000at4F" title="Preferred Language for Household">
-					<option value="">--None--</option>
-					<option value="English">English</option>
-					<option value="Spanish">Spanish</option>
-					<option value="Vietnamese">Vietnamese</option>
-					<option value="Chinese">Chinese</option>
-					<option value="Tagolog">Tagolog</option>
-					<option value="Russian">Russian</option>
-					<option value="Farci, Persian">Farci, Persian</option>
-					<option value="Korean">Korean</option>
-					<option value="American">American</option>
-					<option value="Arabic">Arabic</option>
-					<option value="OTHER (let staff know what language was not represented in list)">OTHER (let staff know what language was not represented in list)</option>
-				</select><br>
+					<label for="householdIncome">Does any household member receive income from any source?</label>
+					<select class="form-control"   id="00N63000000at0w" name="00N63000000at0w" title="HH member receiving income?">
+						<option value="">--None--</option>
+						<option value="Yes">Yes</option>
+						<option value="No">No</option>
+						<option value="I don&#39;t know">I don&#39;t know</option>
+						<option value="I prefer not to answer">I prefer not to answer</option>
+					</select><br>
+
+					<label for="moreHousholdIncome">Is anyone in your household recieving any of the following? Please check all that apply and provide the amount in the box below the check</label><br>
+
+					Income: TANF/CalWorks:<input  id="00N63000000at1f" name="00N63000000at1f" type="checkbox" value="1" /><br>
+					Income Source: TANF / CalWORKS:<input  id="00N63000000at2J" name="00N63000000at2J" size="20" class="form-control" type="text" /><br>
+					Income: SSI:<input  id="00N63000000at1a" name="00N63000000at1a" type="checkbox" value="1" /><br>
+					Income Source: SSI (Supmntl Sec Inc):<input  id="00N63000000at2E" name="00N63000000at2E" size="20" class="form-control" type="text" /><br>
+					Income: Pension:<input  id="00N63000000at1Q" name="00N63000000at1Q" type="checkbox" value="1" /><br>
+					Income Source: Pension (Retirement):<input  id="00N63000000at24" name="00N63000000at24" size="20" class="form-control" type="text" /><br>
+					Income: Unemployement:<input  id="00N63000000at1k" name="00N63000000at1k" type="checkbox" value="1" /><br>
+					Income Source: Unemployment (EDD):<input  id="00N63000000at2O" name="00N63000000at2O" size="20" class="form-control" type="text" /><br>
+					Income: SSDI:<input  id="00N63000000at1V" name="00N63000000at1V" type="checkbox" value="1" /><br>
+					Income Source: SSDI (Soc Sec Dis Insnc):<input  id="00N63000000at29" name="00N63000000at29" size="20" class="form-control" type="text" /><br>
+					Income: GA:<input  id="00N63000000at16" name="00N63000000at16" type="checkbox" value="1" /><br>
+					Income Source: General Assistance:<input  id="00N63000000at1u" name="00N63000000at1u" size="20" class="form-control" type="text" /><br>
+					Income: Other:<input  id="00N63000000at1B" name="00N63000000at1B" type="checkbox" value="1" /><br>
+					Income Source: Other:<input  id="00N63000000at1z" name="00N63000000at1z" size="20" class="form-control" type="text" /><br>
+					Benefits: CalFresh (Food Stamps):<input  id="00N63000000at2i" name="00N63000000at2i" type="checkbox" value="1" /><br>
+					Benefits: WIC:<input  id="00N63000000at32" name="00N63000000at32" type="checkbox" value="1" /><br>
+					Benefits: MediCare:<input  id="00N63000000at2x" name="00N63000000at2x" type="checkbox" value="1" /><br>
+					Benefits: MediCal:<input  id="00N63000000at2s" name="00N63000000at2s" type="checkbox" value="1" /><br>
+					Benefits: Other:<input  id="00N63000000at4Z" name="00N63000000at4Z" type="checkbox" value="1" /><br>
+					Benefits: I prefer not to answer:<input  id="00N63000000at2n" name="00N63000000at2n" type="checkbox" value="1" /><br>
+					Benefits: None of the above:<input  id="00N63000000at3M" name="00N63000000at3M" type="checkbox" value="1" /><br>
+					Benefits: I don&#39;t know:<input  id="00N63000000at4U" name="00N63000000at4U" type="checkbox" value="1" /><br><br>
+
+					<label for="language">Preferred Language for Household</label>
+					<select class="form-control"   id="00N63000000at4F" name="00N63000000at4F" title="Preferred Language for Household">
+						<option value="">--None--</option>
+						<option value="English">English</option>
+						<option value="Spanish">Spanish</option>
+						<option value="Vietnamese">Vietnamese</option>
+						<option value="Chinese">Chinese</option>
+						<option value="Tagolog">Tagolog</option>
+						<option value="Russian">Russian</option>
+						<option value="Farci, Persian">Farci, Persian</option>
+						<option value="Korean">Korean</option>
+						<option value="American">American</option>
+						<option value="Arabic">Arabic</option>
+						<option value="OTHER (let staff know what language was not represented in list)">OTHER (let staff know what language was not represented in list)</option>
+					</select><br>
+				</div>
 
 				<input type="submit" name="submit">
 			</form>

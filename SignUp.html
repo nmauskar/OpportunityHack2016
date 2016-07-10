@@ -3,42 +3,36 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
 		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
 		<!-- script to hide/show different fields based on who is being registered -->
 		<script>
-			$(document).ready(function() {
-				$('#customer').change(function() {
-					/** @todo */
-					switch ($(this).val()) {
-						case 'Me': $('#registration').show(); break;
-						case 'SO': $('#registration').show(); break;
-						case 'Adult': $('#registration').show(); break;
-						case 'Child': $('#registration').show(); break;
-						default: $('#registration').show(); break;
-					}
-				});
-
-				$("#registration").hide();
+		$(document).ready(function() {
+			$('#customer').change(function() {
+				/** @todo */
+				switch ($(this).val()) {
+					case 'Me': $('#registration').show(); break;
+					case 'SO': $('#registration').show(); break;
+					case 'Adult': $('#registration').show(); break;
+					case 'Child': $('#registration').show(); break;
+					default: $('#registration').show(); break;
+				}
 			});
+			$("#registration").hide();
+		});
 		</script>
 		<!-- end registration script -->
-
 		<style>
-			.navbar-left > img {
-				float: left !important;
-				width: 70px;
-				margin: 0px 15px;
-			}
-
-			body > .container {
-				margin-top: 80px;
-			}
+		.navbar-left > img {
+			float: left !important;
+			width: 70px;
+			margin: 0px 15px;
+		}
+		body > .container {
+			margin-top: 80px;
+		}
 		</style>
 	</head>
 	<body>
@@ -52,227 +46,360 @@
 				</div>
 			</div>
 		</nav>
-
 		<div class="container">
-
 			<!-- Google Translate -->
 			<div id="google_translate_element"></div>
 			<script type="text/javascript">
-				function googleTranslateElementInit() {
-					new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'en,es,fa,ru,tl,vi,zh-CN' }, 'google_translate_element');
-				}
+			function googleTranslateElementInit() {
+				new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'en,es,fa,ru,tl,vi,zh-CN' }, 'google_translate_element');
+			}
 			</script>
 			<script type="text/javascript" src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 			<!-- Google Translate End -->
-
 			<br>
-
+			
 			<!-- who is the form for -->
-			<label for="customer">Who are you signing up?</label><select id="customer" class="form-control" name="customer">
+			<label for="customer">Who are you signing up?</label>
+			<select id="customer" class="form-control" name="customer">
 				<option value="">----</option>
 				<option value="Me">Myself</option>
 				<option value="SO">Spouse/Significant Other</option>
 				<option value="Adult">Another Adult</option>
 				<option value="Child">Child</option>
 			</select><br>
-
-			<form id="registration" action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" class="">
-
-				<input class="form-control" type=hidden name="oid" value="00D630000008yyp">
-				<input class="form-control" type=hidden name="retURL" value="http://">
-
-				<!-- Debug -->
-				<input class="form-control" type="hidden" name="debug" value="1">
-				<input class="form-control" type="hidden" name="debugEmail" value="developer@sacredheartcs.org">
-				<!-- Debug End -->
-
-				<label for="first_name">First Name</label> <input class="form-control" id="first_name" maxlength="40" name="first_name" size="20" type="text" /><br>
-
-				<label for="last_name">Last Name</label> <input class="form-control" id="last_name" maxlength="80" name="last_name" size="20" type="text" /><br>
-
-				<label for="email">Email</label> <input class="form-control" id="email" maxlength="80" name="email" size="20" type="text" /><br>
-
-				<label for="company">Company</label> <input class="form-control" id="company" maxlength="40" name="company" size="20" type="text" /><br>
-
-				<label for="city">City</label> <input class="form-control" id="city" maxlength="40" name="city" size="20" type="text" /><br>
-
-				<label for="state">State/Province</label> <input class="form-control" id="state" maxlength="20" name="state" size="20" type="text" /><br>
-
-				<label for="salutation">Salutation</label>
-				<select id="salutation" class="form-control" name="salutation">
+			
+			<!-- actual form -->
+			<form action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+				<input type=hidden name="oid" value="00D630000008yyp">
+				<input type=hidden name="retURL" value="http://">
+				
+				<!--  ----------------------------------------------------------------------  -->
+				<!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
+				<!--  these lines if you wish to test in debug mode.                          -->
+				<input type="hidden" name="debug" value=1>
+				<input type="hidden" name="debugEmail" value="developer@sacredheartcs.org">
+				<!--  ----------------------------------------------------------------------  -->
+				
+				<label for="first_name">First Name</label>
+				<input  id="first_name" maxlength="40" name="first_name" size="20" type="text" /><br>
+				
+				<label for="last_name">Last Name</label>
+				<input  id="last_name" maxlength="80" name="last_name" size="20" type="text" /><br>
+				
+				Birthdate:
+				<span class="dateInput dateOnlyInput">
+					<input  id="00N63000000asvD" name="00N63000000asvD" size="12" type="text" />
+				</span>
+				<br>
+				
+				Gender:
+				<select  id="00N63000000asv8" name="00N63000000asv8" title="Gender">
 					<option value="">--None--</option>
-					<option value="Mr.">Mr.</option>
-					<option value="Ms.">Ms.</option>
-					<option value="Mrs.">Mrs.</option>
-					<option value="Dr.">Dr.</option>
-					<option value="Prof.">Prof.</option>
-					<option value="Miss">Miss</option>
-					<option value="Fr.">Fr.</option>
-					<option value="Sr.">Sr.</option>
-					<option value="Pastor">Pastor</option>
-					<option value="Rev.">Rev.</option>
-					<option value="Rabbi">Rabbi</option>
-					<option value="Council member">Council member</option>
-					<option value="Assemblyman">Assemblyman</option>
-					<option value="Assemblywoman">Assemblywoman</option>
-					<option value="Congressman">Congressman</option>
-					<option value="Congresswoman">Congresswoman</option>
-					<option value="Mr. and Mrs.">Mr. and Mrs.</option>
+					<option value="Male">Male</option>
+					<option value="Female">Female</option>
+					<option value="Transgender: Male to Female">Transgender: Male to Female</option>
+					<option value="Transgender: Female to Male">Transgender: Female to Male</option>
+					<option value="Not Collected">Not Collected</option>
+					<option value="I prefer not to answer">I prefer not to answer</option>
+				</select><br>
+				
+				Relationship to Primary Contact:
+				<select  id="00N63000000at45" name="00N63000000at45" title="Relationship to Primary Contact">
+					<option value="">--None--</option>
+					<option value="Primary">Primary</option>
+					<option value="Spouse / Significant Other">Spouse / Significant Other</option>
+					<option value="Daughter">Daughter</option>
+					<option value="Son">Son</option>
+					<option value="Mother">Mother</option>
+					<option value="Father">Father</option>
+					<option value="Grandmother">Grandmother</option>
+					<option value="Grandfather">Grandfather</option>
+					<option value="Granddaughter">Granddaughter</option>
+					<option value="Grandson">Grandson</option>
+					<option value="Step-daughter">Step-daughter</option>
+					<option value="Step-son">Step-son</option>
+					<option value="Friend/Roommate">Friend/Roommate</option>
+					<option value="Other Relative">Other Relative</option>
+					<option value="Other Non-Relative">Other Non-Relative</option>
+					<option value="I prefer not to answer">I prefer not to answer</option>
+				</select><br>
+				
+				Race: American Indian and Alaskan Native:
+				<input  id="00N63000000asvI" name="00N63000000asvI" type="checkbox" value="1" /><br>
+				
+				Race: Asian:
+				<input  id="00N63000000asvN" name="00N63000000asvN" type="checkbox" value="1" /><br>
+				
+				Race: Black or African American:
+				<input  id="00N63000000asvS" name="00N63000000asvS" type="checkbox" value="1" /><br>
+				
+				Race: Native Hawaiian (pacific islander):
+				<input  id="00N63000000asvm" name="00N63000000asvm" type="checkbox" value="1" /><br>
+				
+				Race: White:
+				<input  id="00N63000000asvw" name="00N63000000asvw" type="checkbox" value="1" /><br>
+				
+				Race: Other:
+				<input  id="00N63000000asvr" name="00N63000000asvr" type="checkbox" value="1" /><br>
+				
+				Race: I don&#39;t know:
+				<input  id="00N63000000asvc" name="00N63000000asvc" type="checkbox" value="1" /><br>
+				
+				Race: I prefer not to answer:
+				<input  id="00N63000000asvh" name="00N63000000asvh" type="checkbox" value="1" /><br>
+				
+				US Veteran?:
+				<select  id="00N63000000asut" name="00N63000000asut" title="US Veteran?">
+					<option value="">--None--</option>
+					<option value="No">No</option>
+					<option value="Yes">Yes</option>
+					<option value="I don&#39;t know">I don&#39;t know</option>
+					<option value="I prefer not to answer">I prefer not to answer</option>
+				</select><br>
+				
+				Disability:
+				<select  id="00N63000000asv3" name="00N63000000asv3" title="Disability">
+					<option value="">--None--</option>
+					<option value="Yes">Yes</option>
+					<option value="No">No</option>
+					<option value="I don&#39;t know">I don&#39;t know</option>
+					<option value="I prefer not to answer">I prefer not to answer</option>
 				</select><br>
 
-				<label for="title">Title</label> <input class="form-control" id="title" maxlength="40" name="title" size="20" type="text" /><br>
-
-				<label for="URL">Website</label> <input class="form-control" id="URL" maxlength="80" name="URL" size="20" type="text" /><br>
-
-				<label for="phone">Phone</label> <input class="form-control" id="phone" maxlength="40" name="phone" size="20" type="text" /><br>
-
-				<label for="mobile">Mobile</label> <input class="form-control" id="mobile" maxlength="40" name="mobile" size="20" type="text" /><br>
-
-				<label for="fax">Fax</label> <input class="form-control" id="fax" maxlength="40" name="fax" size="20" type="text" /><br>
-
-				<label for="street">Street</label><textarea class="form-control" name="street" rows="3"></textarea><br>
-
-				<label for="zip">Zip</label> <input class="form-control" id="zip" maxlength="20" name="zip" size="20" type="text" /><br>
-
-				<label for="country">Country</label> <input class="form-control" id="country" maxlength="40" name="country" size="20" type="text" /><br>
-
-				<label for="description">Description</label><textarea class="form-control" name="description" rows="3"></textarea><br>
-
-				<label for="lead_source">Lead Source</label>
-				<select id="lead_source" class="form-control" name="lead_source">
+				Health Insurance:
+				<select  id="00N63000000aswL" name="00N63000000aswL" title="Health Insurance">
 					<option value="">--None--</option>
-					<option value="Web">Web</option>
-					<option value="Phone Inquiry">Phone Inquiry</option>
-					<option value="Partner Referral">Partner Referral</option>
-					<option value="Purchased List">Purchased List</option>
-					<option value="Other">Other</option>
+					<option value="Yes">Yes</option>
+					<option value="No">No</option>
+					<option value="I don&#39;t know">I don&#39;t know</option>
+					<option value="I prefer not to answer">I prefer not to answer</option>
 				</select><br>
 
-				<label for="industry">Industry</label>
-				<select id="industry" class="form-control" name="industry">
+				Highest Level of Education:
+				<select  id="00N63000000aswa" name="00N63000000aswa" title="Highest Level of Education">
 					<option value="">--None--</option>
-					<option value="Agriculture">Agriculture</option>
-					<option value="Apparel">Apparel</option>
-					<option value="Banking">Banking</option>
-					<option value="Biotechnology">Biotechnology</option>
-					<option value="Chemicals">Chemicals</option>
-					<option value="Communications">Communications</option>
-					<option value="Construction">Construction</option>
-					<option value="Consulting">Consulting</option>
-					<option value="Education">Education</option>
-					<option value="Electronics">Electronics</option>
-					<option value="Energy">Energy</option>
-					<option value="Engineering">Engineering</option>
-					<option value="Entertainment">Entertainment</option>
-					<option value="Environmental">Environmental</option>
-					<option value="Finance">Finance</option>
-					<option value="Food &amp; Beverage">Food &amp; Beverage</option>
-					<option value="Government">Government</option>
-					<option value="Healthcare">Healthcare</option>
-					<option value="Hospitality">Hospitality</option>
-					<option value="Insurance">Insurance</option>
-					<option value="Machinery">Machinery</option>
-					<option value="Manufacturing">Manufacturing</option>
-					<option value="Media">Media</option>
-					<option value="Not For Profit">Not For Profit</option>
-					<option value="Recreation">Recreation</option>
-					<option value="Retail">Retail</option>
-					<option value="Shipping">Shipping</option>
-					<option value="Technology">Technology</option>
-					<option value="Telecommunications">Telecommunications</option>
-					<option value="Transportation">Transportation</option>
-					<option value="Utilities">Utilities</option>
-					<option value="Other">Other</option>
+					<option value="0-8">0-8</option>
+					<option value="9-12/Non-Graduate">9-12/Non-Graduate</option>
+					<option value="High School Graduate / GED Certificate">High School Graduate / GED Certificate</option>
+					<option value="12+ Some Post Secondary">12+ Some Post Secondary</option>
+					<option value="2-Yr College graduate">2-Yr College graduate</option>
+					<option value="4-Yr College graduate">4-Yr College graduate</option>
+					<option value="No Schooling">No Schooling</option>
+					<option value="I don&#39;t know">I don&#39;t know</option>
+					<option value="I prefer not to answer">I prefer not to answer</option>
+					<option value="2 or 4 yr. College Graduate">2 or 4 yr. College Graduate</option>
 				</select><br>
 
-				<label for="rating">Rating</label>
-				<select id="rating" class="form-control" name="rating">
+				Currently Employed:
+				<select  id="00N63000000aswk" name="00N63000000aswk" title="Currently Employed">
 					<option value="">--None--</option>
-					<option value="D">D</option>
-					<option value="C">C</option>
-					<option value="B">B</option>
-					<option value="A">A</option>
-					<option value="Prospect">Prospect</option>
-					<option value="Hot">Hot</option>
-					<option value="Warm">Warm</option>
-					<option value="Cold">Cold</option>
+					<option value="Yes">Yes</option>
+					<option value="No">No</option>
 				</select><br>
 
-				<label for="revenue">Annual Revenue</label> <input class="form-control" id="revenue" name="revenue" size="20" type="text" /><br>
-
-				<label for="employees">Employees</label> <input class="form-control" id="employees" name="employees" size="20" type="text" value="" /><br>
-
-				<label for="Campaign_ID">Campaign</label>
-				<select id="Campaign_ID" class="form-control" name="Campaign_ID">
+				Contact Employment Income:
+				<input  id="00N63000000at4A" name="00N63000000at4A" size="20" type="text" /><br>
+				
+				Domestic Violence:
+				<select  id="00N63000000asxi" name="00N63000000asxi" title="Domestic Violence">
 					<option value="">--None--</option>
-				</select>
+					<option value="Yes">Yes</option>
+					<option value="No">No</option>
+					<option value="I don&#39;t know">I don&#39;t know</option>
+					<option value="I prefer not to answer">I prefer not to answer</option>
+				</select><br>
 
-				<input class="form-control" type="hidden" id="member_status" name="member_status" value="" /><br>
+				Domestic Violence: If so, when:
+				<select  id="00N63000000asy2" name="00N63000000asy2" title="Domestic Violence: If so, when">
+					<option value="">--None--</option>
+					<option value="Within the past three months">Within the past three months</option>
+					<option value="3-6 months">3-6 months</option>
+					<option value="6 months to 1 year">6 months to 1 year</option>
+					<option value="1 year or more">1 year or more</option>
+					<option value="I don&#39;t know">I don&#39;t know</option>
+					<option value="I prefer not to answer">I prefer not to answer</option>
+				</select><br>
 
-				<label for="emailOptOut">Email Opt Out</label> <input id="emailOptOut" name="emailOptOut" type="checkbox" value="1" /><br>
+				Domestic Violence: Outreach:
+				<select  id="00N63000000asyC" name="00N63000000asyC" title="Domestic Violence: Outreach">
+					<option value="">--None--</option>
+					<option value="No">No</option>
+					<option value="Yes">Yes</option>
+				</select><br>
 
-				<label for="faxOptOut">Fax Opt Out</label> <input id="faxOptOut" name="faxOptOut" type="checkbox" value="1" /><br>
-
-				<label for="doNotCall">Do Not Call</label> <input id="doNotCall" name="doNotCall" type="checkbox" value="1" /><br>
-
+				Home Phone:
+				<input  id="00N63000000asyR" maxlength="40" name="00N63000000asyR" onkeydown="formatPhoneOnEnter(this, event);" size="20" type="text" />
 				<br>
 
-				Preferred Email:
-				<select id="00Nj0000005iTUt" class="form-control" name="00Nj0000005iTUt" title="Preferred Email">
+				<label for="mobile">Mobile</label>
+				<input  id="mobile" maxlength="40" name="mobile" size="20" type="text" />
+				<br>
+
+				<label for="email">Email</label>
+				<input  id="email" maxlength="80" name="email" size="20" type="text" />
+				<br>
+
+				May We Contact You:
+				<select  id="00N63000000asyb" name="00N63000000asyb" title="May We Contact You">
 					<option value="">--None--</option>
-					<option value="Personal">Personal</option>
-					<option value="Work">Work</option>
-					<option value="Alternate">Alternate</option>
+					<option value="Yes">Yes</option>
+					<option value="No">No</option>
 				</select><br>
 
-				Preferred Phone:
-				<select id="00Nj0000005iTUu" class="form-control" name="00Nj0000005iTUu" title="Preferred Phone">
+				Preferred Contact: Email:
+				<input  id="00N63000000asyg" name="00N63000000asyg" type="checkbox" value="1" />
+				<br>
+				
+				Preferred Contact: Home Phone:
+				<input  id="00N63000000asyl" name="00N63000000asyl" type="checkbox" value="1" />
+				<br>
+				
+				Preferred Contact: Mobile Phone:
+				<input  id="00N63000000asyq" name="00N63000000asyq" type="checkbox" value="1" />
+				<br>
+
+				Household Type:
+				<select  id="00N63000000aszA" name="00N63000000aszA" title="Household Type">
 					<option value="">--None--</option>
-					<option value="Home">Home</option>
-					<option value="Work">Work</option>
-					<option value="Mobile">Mobile</option>
+					<option value="Single Parent/Female">Single Parent/Female</option>
+					<option value="Single Parent/Male">Single Parent/Male</option>
+					<option value="Two-parent household">Two-parent household</option>
+					<option value="Single Person">Single Person</option>
+					<option value="Two Adults - No children">Two Adults - No children</option>
 					<option value="Other">Other</option>
+					<option value="I prefer not to answer">I prefer not to answer</option>
 				</select><br>
 
-				Volunteer Availability:
-				<select id="00Nj0000005iTaj" class="form-control" multiple="multiple" name="00Nj0000005iTaj" title="Volunteer Availability">
-					<option value="Weekdays">Weekdays</option>
-					<option value="Weekends">Weekends</option>
-					<option value="Morning">Morning</option>
-					<option value="Afternoon">Afternoon</option>
-					<option value="Weekly">Weekly</option>
-				</select><br>
+				<label for="street">Street</label>
+				<textarea name="street"></textarea>
+				<br>
 
-				Volunteer Notes:<textarea id="00Nj0000005iTak" class="form-control" name="00Nj0000005iTak" rows="5" type="text" wrap="soft"></textarea><br>
+				<label for="city">City</label>
+				<input  id="city" maxlength="40" name="city" size="20" type="text" />
+				<br>
 
-				Volunteer Skills:
-				<select id="00Nj0000005iTal" class="form-control" multiple="multiple" name="00Nj0000005iTal" title="Volunteer Skills">
-					<option value="Computer usage">Computer usage</option>
-					<option value="Manual labor">Manual labor</option>
-					<option value="Marketing">Marketing</option>
-					<option value="Fundraising">Fundraising</option>
-					<option value="Event Planning">Event Planning</option>
-					<option value="Landscaping">Landscaping</option>
-				</select><br>
+				<label for="state">State/Province</label>
+				<input  id="state" maxlength="20" name="state" size="20" type="text" />
+				<br>
 
-				Volunteer Status:
-				<select id="00Nj0000005iTam" class="form-control" name="00Nj0000005iTam" title="Volunteer Status">
+				<label for="zip">Zip</label>
+				<input  id="zip" maxlength="20" name="zip" size="20" type="text" />
+				<br>
+
+				<label for="country">Country</label>
+				<input  id="country" maxlength="40" name="country" size="20" type="text" />
+				<br>
+
+				Housing Status:
+				<select  id="00N63000000aszK" name="00N63000000aszK" title="Housing Status">
 					<option value="">--None--</option>
-					<option value="New Sign Up">New Sign Up</option>
+					<option value="I own: House">I own: House</option>
+					<option value="I own: Mobile Home">I own: Mobile Home</option>
+					<option value="I own: Condo">I own: Condo</option>
+					<option value="I rent: House">I rent: House</option>
+					<option value="I rent: Apartment">I rent: Apartment</option>
+					<option value="I rent: Mobile Home">I rent: Mobile Home</option>
+					<option value="I rent: Room">I rent: Room</option>
+					<option value="I am stably living with: Family">I am stably living with: Family</option>
+					<option value="I am stably living with: Friends">I am stably living with: Friends</option>
+					<option value="I am stably living with: Other">I am stably living with: Other</option>
+					<option value="I am temporarily staying at: Family&#39;s">I am temporarily staying at: Family&#39;s</option>
+					<option value="I am temporarily staying at: Friend&#39;s">I am temporarily staying at: Friend&#39;s</option>
+					<option value="I am temporarily staying at: Shelter">I am temporarily staying at: Shelter</option>
+					<option value="I am temporarily staying at: Hotel">I am temporarily staying at: Hotel</option>
+					<option value="I am temporarily staying at: Other">I am temporarily staying at: Other</option>
+					<option value="I am living in a: Car">I am living in a: Car</option>
+					<option value="I am living in a: Outside">I am living in a: Outside</option>
+					<option value="I am living in a: Place not meant for human habitation">I am living in a: Place not meant for human habitation</option>
+					<option value="Other">Other</option>
+					<option value="I prefer not to answer">I prefer not to answer</option>
 				</select><br>
 
-				Company City: <input class="form-control" id="00Nj000000AbxoL" maxlength="255" name="00Nj000000AbxoL" size="20" type="text" /><br>
+				Housing Status: Other:
+				<input  id="00N63000000aszZ" maxlength="60" name="00N63000000aszZ" size="20" type="text" />
+				<br>
 
-				Company Country: <input class="form-control" id="00Nj000000AbxoM" maxlength="255" name="00Nj000000AbxoM" size="20" type="text" /><br>
+				Housing Status Length:
+				<input  id="00N63000000at4K" name="00N63000000at4K" size="20" type="text" />
+				<br>
 
-				Company Zip/Postal Code: <input class="form-control" id="00Nj000000AbxoN" maxlength="255" name="00Nj000000AbxoN" size="20" type="text" /><br>
+				Housing Subsidy: Section 8:
+				<input  id="00N63000000at0m" name="00N63000000at0m" type="checkbox" value="1" />
+				<br>
 
-				Company State/Province: <input class="form-control" id="00Nj000000AbxoO" maxlength="255" name="00Nj000000AbxoO" size="20" type="text" /><br>
+				Housing Subsidy: Affdble Hsing Dev:
+				<input  id="00N63000000at03" name="00N63000000at03" type="checkbox" value="1" />
+				<br>
 
-				Company Street:<textarea id="00Nj000000AbxoP" class="form-control" name="00Nj000000AbxoP" type="text" wrap="soft" rows="3"></textarea><br>
+				Housing Subsidy: Friends or Family:
+				<input  id="00N63000000at08" name="00N63000000at08" type="checkbox" value="1" />
+				<br>
 
-				<button class="btn btn-primary" type="submit">Submit</button>
+				Housing Subsidy: Other:
+				<input  id="00N63000000at0h" name="00N63000000at0h" type="checkbox" value="1" />
+				<br>
 
+				Housing Subsidy: No:
+				<input  id="00N63000000at0c" name="00N63000000at0c" type="checkbox" value="1" />
+				<br>
+
+				Housing Subsidy: I don&#39;t know:
+				<input  id="00N63000000at4P" name="00N63000000at4P" type="checkbox" value="1" />
+				<br>
+
+				Housing Subsidy: I prefer not to answer:
+				<input  id="00N63000000at0X" name="00N63000000at0X" type="checkbox" value="1" />
+				<br>
+
+				HH member receiving income?:
+				<select  id="00N63000000at0w" name="00N63000000at0w" title="HH member receiving income?">
+					<option value="">--None--</option>
+					<option value="Yes">Yes</option>
+					<option value="No">No</option>
+					<option value="I don&#39;t know">I don&#39;t know</option>
+					<option value="I prefer not to answer">I prefer not to answer</option>
+				</select><br>
+
+				Income: TANF/CalWorks:<input  id="00N63000000at1f" name="00N63000000at1f" type="checkbox" value="1" /><br>
+				Income Source: TANF / CalWORKS:<input  id="00N63000000at2J" name="00N63000000at2J" size="20" type="text" /><br>
+				Income: SSI:<input  id="00N63000000at1a" name="00N63000000at1a" type="checkbox" value="1" /><br>
+				Income Source: SSI (Supmntl Sec Inc):<input  id="00N63000000at2E" name="00N63000000at2E" size="20" type="text" /><br>
+				Income: Pension:<input  id="00N63000000at1Q" name="00N63000000at1Q" type="checkbox" value="1" /><br>
+				Income Source: Pension (Retirement):<input  id="00N63000000at24" name="00N63000000at24" size="20" type="text" /><br>
+				Income: Unemployement:<input  id="00N63000000at1k" name="00N63000000at1k" type="checkbox" value="1" /><br>
+				Income Source: Unemployment (EDD):<input  id="00N63000000at2O" name="00N63000000at2O" size="20" type="text" /><br>
+				Income: SSDI:<input  id="00N63000000at1V" name="00N63000000at1V" type="checkbox" value="1" /><br>
+				Income Source: SSDI (Soc Sec Dis Insnc):<input  id="00N63000000at29" name="00N63000000at29" size="20" type="text" /><br>
+				Income: GA:<input  id="00N63000000at16" name="00N63000000at16" type="checkbox" value="1" /><br>
+				Income Source: General Assistance:<input  id="00N63000000at1u" name="00N63000000at1u" size="20" type="text" /><br>
+				Income: Other:<input  id="00N63000000at1B" name="00N63000000at1B" type="checkbox" value="1" /><br>
+				Income Source: Other:<input  id="00N63000000at1z" name="00N63000000at1z" size="20" type="text" /><br>
+				Benefits: CalFresh (Food Stamps):<input  id="00N63000000at2i" name="00N63000000at2i" type="checkbox" value="1" /><br>
+				Benefits: WIC:<input  id="00N63000000at32" name="00N63000000at32" type="checkbox" value="1" /><br>
+				Benefits: MediCare:<input  id="00N63000000at2x" name="00N63000000at2x" type="checkbox" value="1" /><br>
+				Benefits: MediCal:<input  id="00N63000000at2s" name="00N63000000at2s" type="checkbox" value="1" /><br>
+				Benefits: Other:<input  id="00N63000000at4Z" name="00N63000000at4Z" type="checkbox" value="1" /><br>
+				Benefits: I prefer not to answer:<input  id="00N63000000at2n" name="00N63000000at2n" type="checkbox" value="1" /><br>
+				Benefits: None of the above:<input  id="00N63000000at3M" name="00N63000000at3M" type="checkbox" value="1" /><br>
+				Benefits: I don&#39;t know:<input  id="00N63000000at4U" name="00N63000000at4U" type="checkbox" value="1" /><br>
+
+				Preferred Language for Household:
+				<select  id="00N63000000at4F" name="00N63000000at4F" title="Preferred Language for Household">
+					<option value="">--None--</option>
+					<option value="English">English</option>
+					<option value="Spanish">Spanish</option>
+					<option value="Vietnamese">Vietnamese</option>
+					<option value="Chinese">Chinese</option>
+					<option value="Tagolog">Tagolog</option>
+					<option value="Russian">Russian</option>
+					<option value="Farci, Persian">Farci, Persian</option>
+					<option value="Korean">Korean</option>
+					<option value="American">American</option>
+					<option value="Arabic">Arabic</option>
+					<option value="OTHER (let staff know what language was not represented in list)">OTHER (let staff know what language was not represented in list)</option>
+				</select><br>
+				
+				<input type="submit" name="submit">
 			</form>
 		</div>
 	</body>

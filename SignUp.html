@@ -4,11 +4,52 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 		<!-- script to hide/show different fields based on who is being registered -->
 		<script>
+			var formsLeft = 0;
+			function submitForms(event) {
+				var forms = $('form.form-open');
+				formsLeft = forms.length;
+
+				forms.each(function() {
+					var form = $(this),
+						data = form.serializeObject(),
+						url = form.attr('action'),
+						type = form.attr('method');
+
+					$.ajax({
+						type: type,
+						url: url,
+						data: data,
+						crossDomain: true,
+						success: function(data) {
+							console.log(data);
+						},
+						async: false
+					});
+				});
+
+				alert('Done!');
+			}
+
+			$.fn.serializeObject = function serializeObject() {
+				var o = {};
+				var a = this.serializeArray();
+				$.each(a, function() {
+					if (o[this.name] !== undefined) {
+						if (!o[this.name].push) {
+							o[this.name] = [o[this.name]];
+						}
+						o[this.name].push(this.value || '');
+					} else {
+						o[this.name] = this.value || '';
+					}
+				});
+				return o;
+			};
+
 			$(document).ready(function() {
 				$('#00N63000000atDM').val(Date.now());
 
@@ -17,7 +58,7 @@
 				});
 
 				$('#00N63000000at1f, #00N63000000at1a, #00N63000000at1Q, #00N63000000at1k, #00N63000000at1V, #00N63000000at16, #00N63000000at1B').change(function() {
-					var thisElement = $(this).next().next();
+					var thisElement = $(this).next();
 
 					if ($(this).prop('checked')) {
 						thisElement.show();
@@ -31,18 +72,18 @@
 
 					switch ($(this).val()) {
 						case 'SO':
-							element = $('#registration-spouse').clone().show().attr('id', '');
+							element = $('#registration-spouse').clone();
 							break;
 						case 'Adult':
-							element = $('#registration-adult').clone().show().attr('id', '');
+							element = $('#registration-adult').clone();
 							break;
 						case 'Child':
-							element = $('#registration-child').clone().show().attr('id', '');
+							element = $('#registration-child').clone();
 							break;
 					}
 
 					if (element) {
-						element.prepend($('hr'));
+						element.show().attr('id', '').addClass('form-open').prepend($('hr'));
 
 						$('#additionalLeads').append(element);
 
@@ -62,12 +103,29 @@
 				width: 70px;
 				margin: 0px 15px;
 			}
+
 			body > .container {
 				margin-top: 80px;
 			}
+
 			hr {
 				height: 5px !important;
 				background-color: rgb(176, 41, 47) !important;
+			}
+
+			.hhIncomeValue {
+				max-width: 500px;
+				height: 25px;
+			}
+			.hhIncomeValue > p1, .hhIncomeValue > input[type="checkbox"] {
+				margin-top: 5px;
+			}
+			.hhIncomeValue input[type="number"] {
+				float: right;
+				outline: none;
+				border: none;
+				border-bottom: solid 1px #000;
+				text-align: right;
 			}
 		</style>
 	</head>
@@ -107,30 +165,14 @@
 			</select><br>
 
 			<label for="race">What is this person's race or origin? Check ALL that apply</label><br>
-
-			Race: American Indian and Alaskan Native:
-			<input id="00N63000000asvI" name="00N63000000asvI" type="checkbox" value="1" /><br>
-
-			Race: Asian:
-			<input id="00N63000000asvN" name="00N63000000asvN" type="checkbox" value="1" /><br>
-
-			Race: Black or African American:
-			<input id="00N63000000asvS" name="00N63000000asvS" type="checkbox" value="1" /><br>
-
-			Race: Native Hawaiian (pacific islander):
-			<input id="00N63000000asvm" name="00N63000000asvm" type="checkbox" value="1" /><br>
-
-			Race: White:
-			<input id="00N63000000asvw" name="00N63000000asvw" type="checkbox" value="1" /><br>
-
-			Race: Other:
-			<input id="00N63000000asvr" name="00N63000000asvr" type="checkbox" value="1" /><br>
-
-			Race: I don&#39;t know:
-			<input id="00N63000000asvc" name="00N63000000asvc" type="checkbox" value="1" /><br>
-
-			Race: I prefer not to answer:
-			<input id="00N63000000asvh" name="00N63000000asvh" type="checkbox" value="1" /><br>
+			American Indian and Alaskan Native: <input id="00N63000000asvI" name="00N63000000asvI" type="checkbox" value="1" /><br>
+			Asian: <input id="00N63000000asvN" name="00N63000000asvN" type="checkbox" value="1" /><br>
+			Black or African American: <input id="00N63000000asvS" name="00N63000000asvS" type="checkbox" value="1" /><br>
+			Native Hawaiian (pacific islander): <input id="00N63000000asvm" name="00N63000000asvm" type="checkbox" value="1" /><br>
+			White: <input id="00N63000000asvw" name="00N63000000asvw" type="checkbox" value="1" /><br>
+			Other: <input id="00N63000000asvr" name="00N63000000asvr" type="checkbox" value="1" /><br>
+			I don&#39;t know: <input id="00N63000000asvc" name="00N63000000asvc" type="checkbox" value="1" /><br>
+			I prefer not to answer: <input id="00N63000000asvh" name="00N63000000asvh" type="checkbox" value="1" /><br>
 			<br>
 
 			<label for="veteran">Has this person ever served in the U.S. military?</label>
@@ -143,7 +185,7 @@
 			</select><br>
 
 			<label for="disability">Does this person have a disability?</label>
-			<select class="form-control"  id="00N63000000asv3" name="00N63000000asv3" title="Disability">
+			<select class="form-control" id="00N63000000asv3" name="00N63000000asv3" title="Disability">
 				<option value="">--None--</option>
 				<option value="Yes">Yes</option>
 				<option value="No">No</option>
@@ -152,7 +194,7 @@
 			</select><br>
 
 			<label for="healthInsurance">Does this person have health insurance?</label>
-			<select class="form-control"  id="00N63000000aswL" name="00N63000000aswL" title="Health Insurance">
+			<select class="form-control" id="00N63000000aswL" name="00N63000000aswL" title="Health Insurance">
 				<option value="">--None--</option>
 				<option value="Yes">Yes</option>
 				<option value="No">No</option>
@@ -161,7 +203,7 @@
 			</select><br>
 
 			<label for="education">Highest Level of Education?</label>
-			<select class="form-control"  id="00N63000000aswa" name="00N63000000aswa" title="Highest Level of Education">
+			<select class="form-control" id="00N63000000aswa" name="00N63000000aswa" title="Highest Level of Education">
 				<option value="">--None--</option>
 				<option value="0-8">0-8</option>
 				<option value="9-12/Non-Graduate">9-12/Non-Graduate</option>
@@ -176,7 +218,7 @@
 			</select><br>
 
 			<label for="employment">Currently Employed?</label>
-			<select class="form-control"  id="00N63000000aswk" name="00N63000000aswk" title="Currently Employed">
+			<select class="form-control" id="00N63000000aswk" name="00N63000000aswk" title="Currently Employed">
 				<option value="">--None--</option>
 				<option value="Yes">Yes</option>
 				<option value="No">No</option>
@@ -214,7 +256,7 @@
 			</select><br>
 
 			<label for="relToAdult">Relationship to Primary Contact</label>
-			<select class="form-control"  id="00N63000000at45" name="00N63000000at45" title="Relationship to Primary Contact">
+			<select class="form-control" id="00N63000000at45" name="00N63000000at45" title="Relationship to Primary Contact">
 				<option value="">--None--</option>
 				<option value="Spouse / Significant Other">Spouse / Significant Other</option>
 				<option value="Daughter">Daughter</option>
@@ -234,30 +276,14 @@
 			</select><br>
 
 			<label for="race">What is this person's race or origin? Check ALL that apply</label><br>
-
-			Race: American Indian and Alaskan Native:
-			<input id="00N63000000asvI" name="00N63000000asvI" type="checkbox" value="1" /><br>
-
-			Race: Asian:
-			<input id="00N63000000asvN" name="00N63000000asvN" type="checkbox" value="1" /><br>
-
-			Race: Black or African American:
-			<input id="00N63000000asvS" name="00N63000000asvS" type="checkbox" value="1" /><br>
-
-			Race: Native Hawaiian (pacific islander):
-			<input id="00N63000000asvm" name="00N63000000asvm" type="checkbox" value="1" /><br>
-
-			Race: White:
-			<input id="00N63000000asvw" name="00N63000000asvw" type="checkbox" value="1" /><br>
-
-			Race: Other:
-			<input id="00N63000000asvr" name="00N63000000asvr" type="checkbox" value="1" /><br>
-
-			Race: I don&#39;t know:
-			<input id="00N63000000asvc" name="00N63000000asvc" type="checkbox" value="1" /><br>
-
-			Race: I prefer not to answer:
-			<input id="00N63000000asvh" name="00N63000000asvh" type="checkbox" value="1" /><br>
+			American Indian and Alaskan Native: <input id="00N63000000asvI" name="00N63000000asvI" type="checkbox" value="1" /><br>
+			Asian: <input id="00N63000000asvN" name="00N63000000asvN" type="checkbox" value="1" /><br>
+			Black or African American: <input id="00N63000000asvS" name="00N63000000asvS" type="checkbox" value="1" /><br>
+			Native Hawaiian (pacific islander): <input id="00N63000000asvm" name="00N63000000asvm" type="checkbox" value="1" /><br>
+			White: <input id="00N63000000asvw" name="00N63000000asvw" type="checkbox" value="1" /><br>
+			Other: <input id="00N63000000asvr" name="00N63000000asvr" type="checkbox" value="1" /><br>
+			I don&#39;t know: <input id="00N63000000asvc" name="00N63000000asvc" type="checkbox" value="1" /><br>
+			I prefer not to answer: <input id="00N63000000asvh" name="00N63000000asvh" type="checkbox" value="1" /><br>
 			<br>
 
 			<label for="veteran">Has this person ever served in the U.S. military?</label>
@@ -270,7 +296,7 @@
 			</select><br>
 
 			<label for="disability">Does this person have a disability?</label>
-			<select class="form-control"  id="00N63000000asv3" name="00N63000000asv3" title="Disability">
+			<select class="form-control" id="00N63000000asv3" name="00N63000000asv3" title="Disability">
 				<option value="">--None--</option>
 				<option value="Yes">Yes</option>
 				<option value="No">No</option>
@@ -279,7 +305,7 @@
 			</select><br>
 
 			<label for="healthInsurance">Does this person have health insurance?</label>
-			<select class="form-control"  id="00N63000000aswL" name="00N63000000aswL" title="Health Insurance">
+			<select class="form-control" id="00N63000000aswL" name="00N63000000aswL" title="Health Insurance">
 				<option value="">--None--</option>
 				<option value="Yes">Yes</option>
 				<option value="No">No</option>
@@ -288,7 +314,7 @@
 			</select><br>
 
 			<label for="education">Highest Level of Education?</label>
-			<select class="form-control"  id="00N63000000aswa" name="00N63000000aswa" title="Highest Level of Education">
+			<select class="form-control" id="00N63000000aswa" name="00N63000000aswa" title="Highest Level of Education">
 				<option value="">--None--</option>
 				<option value="0-8">0-8</option>
 				<option value="9-12/Non-Graduate">9-12/Non-Graduate</option>
@@ -303,7 +329,7 @@
 			</select><br>
 
 			<label for="employment">Currently Employed?</label>
-			<select class="form-control"  id="00N63000000aswk" name="00N63000000aswk" title="Currently Employed">
+			<select class="form-control" id="00N63000000aswk" name="00N63000000aswk" title="Currently Employed">
 				<option value="">--None--</option>
 				<option value="Yes">Yes</option>
 				<option value="No">No</option>
@@ -344,7 +370,7 @@
 			</select><br>
 
 			<label for="relToAdult">Relationship to Primary Contact</label>
-			<select class="form-control"  id="00N63000000at45" name="00N63000000at45" title="Relationship to Primary Contact">
+			<select class="form-control" id="00N63000000at45" name="00N63000000at45" title="Relationship to Primary Contact">
 				<option value="">--None--</option>
 				<option value="Daughter">Daughter</option>
 				<option value="Son">Son</option>
@@ -358,34 +384,18 @@
 			</select><br>
 
 			<label for="race">What is this person's race or origin? Check ALL that apply</label><br>
-
-			Race: American Indian and Alaskan Native:
-			<input id="00N63000000asvI" name="00N63000000asvI" type="checkbox" value="1" /><br>
-
-			Race: Asian:
-			<input id="00N63000000asvN" name="00N63000000asvN" type="checkbox" value="1" /><br>
-
-			Race: Black or African American:
-			<input id="00N63000000asvS" name="00N63000000asvS" type="checkbox" value="1" /><br>
-
-			Race: Native Hawaiian (pacific islander):
-			<input id="00N63000000asvm" name="00N63000000asvm" type="checkbox" value="1" /><br>
-
-			Race: White:
-			<input id="00N63000000asvw" name="00N63000000asvw" type="checkbox" value="1" /><br>
-
-			Race: Other:
-			<input id="00N63000000asvr" name="00N63000000asvr" type="checkbox" value="1" /><br>
-
-			Race: I don&#39;t know:
-			<input id="00N63000000asvc" name="00N63000000asvc" type="checkbox" value="1" /><br>
-
-			Race: I prefer not to answer:
-			<input id="00N63000000asvh" name="00N63000000asvh" type="checkbox" value="1" /><br>
+			American Indian and Alaskan Native: <input id="00N63000000asvI" name="00N63000000asvI" type="checkbox" value="1" /><br>
+			Asian: <input id="00N63000000asvN" name="00N63000000asvN" type="checkbox" value="1" /><br>
+			Black or African American: <input id="00N63000000asvS" name="00N63000000asvS" type="checkbox" value="1" /><br>
+			Native Hawaiian (pacific islander): <input id="00N63000000asvm" name="00N63000000asvm" type="checkbox" value="1" /><br>
+			White: <input id="00N63000000asvw" name="00N63000000asvw" type="checkbox" value="1" /><br>
+			Other: <input id="00N63000000asvr" name="00N63000000asvr" type="checkbox" value="1" /><br>
+			I don&#39;t know: <input id="00N63000000asvc" name="00N63000000asvc" type="checkbox" value="1" /><br>
+			I prefer not to answer: <input id="00N63000000asvh" name="00N63000000asvh" type="checkbox" value="1" /><br>
 			<br>
 
 			<label for="disability">Does this person have a disability?</label>
-			<select class="form-control"  id="00N63000000asv3" name="00N63000000asv3" title="Disability">
+			<select class="form-control" id="00N63000000asv3" name="00N63000000asv3" title="Disability">
 				<option value="">--None--</option>
 				<option value="Yes">Yes</option>
 				<option value="No">No</option>
@@ -394,7 +404,7 @@
 			</select><br>
 
 			<label for="healthInsurance">Does this person have health insurance?</label>
-			<select class="form-control"  id="00N63000000aswL" name="00N63000000aswL" title="Health Insurance">
+			<select class="form-control" id="00N63000000aswL" name="00N63000000aswL" title="Health Insurance">
 				<option value="">--None--</option>
 				<option value="Yes">Yes</option>
 				<option value="No">No</option>
@@ -403,7 +413,7 @@
 			</select><br>
 
 			<label for="employment">Currently Employed?</label>
-			<select class="form-control"  id="00N63000000aswk" name="00N63000000aswk" title="Currently Employed">
+			<select class="form-control" id="00N63000000aswk" name="00N63000000aswk" title="Currently Employed">
 				<option value="">--None--</option>
 				<option value="Yes">Yes</option>
 				<option value="No">No</option>
@@ -438,14 +448,14 @@
 			<br>
 
 			<!-- actual form -->
-			<form id="registration" action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+			<form id="registration" class="form-open" action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
 				<input type=hidden name="oid" value="00D630000008yyp">
 				<input type=hidden name="retURL" value="http://">
 				<input type="hidden" id="00N63000000atDM" name="00N63000000atDM">
 
 				<!-- ---------------------------------------------------------------------- -->
-				<!-- NOTE: These fields are optional debugging elements. Please uncomment  -->
-				<!-- these lines if you wish to test in debug mode.             -->
+				<!-- NOTE: These fields are optional debugging elements. Please uncomment -->
+				<!-- these lines if you wish to test in debug mode.	   -->
 				<input type="hidden" name="debug" value=1>
 				<input type="hidden" name="debugEmail" value="developer@sacredheartcs.org">
 				<!-- ---------------------------------------------------------------------- -->
@@ -476,7 +486,7 @@
 				<!-- only for registering additional adult -->
 				<div class="Adult">
 					<label for="relToAdult">Relationship to Primary Contact</label>
-					<select class="form-control"  id="00N63000000at45" name="00N63000000at45" title="Relationship to Primary Contact">
+					<select class="form-control" id="00N63000000at45" name="00N63000000at45" title="Relationship to Primary Contact">
 						<option value="">--None--</option>
 						<option value="Spouse / Significant Other">Spouse / Significant Other</option>
 						<option value="Daughter">Daughter</option>
@@ -497,30 +507,14 @@
 				</div>
 
 				<label for="race">What is this person's race or origin? Check ALL that apply</label><br>
-
-				Race: American Indian and Alaskan Native:
-				<input id="00N63000000asvI" name="00N63000000asvI" type="checkbox" value="1" /><br>
-
-				Race: Asian:
-				<input id="00N63000000asvN" name="00N63000000asvN" type="checkbox" value="1" /><br>
-
-				Race: Black or African American:
-				<input id="00N63000000asvS" name="00N63000000asvS" type="checkbox" value="1" /><br>
-
-				Race: Native Hawaiian (pacific islander):
-				<input id="00N63000000asvm" name="00N63000000asvm" type="checkbox" value="1" /><br>
-
-				Race: White:
-				<input id="00N63000000asvw" name="00N63000000asvw" type="checkbox" value="1" /><br>
-
-				Race: Other:
-				<input id="00N63000000asvr" name="00N63000000asvr" type="checkbox" value="1" /><br>
-
-				Race: I don&#39;t know:
-				<input id="00N63000000asvc" name="00N63000000asvc" type="checkbox" value="1" /><br>
-
-				Race: I prefer not to answer:
-				<input id="00N63000000asvh" name="00N63000000asvh" type="checkbox" value="1" /><br>
+				American Indian and Alaskan Native: <input id="00N63000000asvI" name="00N63000000asvI" type="checkbox" value="1" /><br>
+				Asian: <input id="00N63000000asvN" name="00N63000000asvN" type="checkbox" value="1" /><br>
+				Black or African American: <input id="00N63000000asvS" name="00N63000000asvS" type="checkbox" value="1" /><br>
+				Native Hawaiian (pacific islander): <input id="00N63000000asvm" name="00N63000000asvm" type="checkbox" value="1" /><br>
+				White: <input id="00N63000000asvw" name="00N63000000asvw" type="checkbox" value="1" /><br>
+				Other: <input id="00N63000000asvr" name="00N63000000asvr" type="checkbox" value="1" /><br>
+				I don&#39;t know: <input id="00N63000000asvc" name="00N63000000asvc" type="checkbox" value="1" /><br>
+				I prefer not to answer: <input id="00N63000000asvh" name="00N63000000asvh" type="checkbox" value="1" /><br>
 				<br>
 
 				<div class="Me SO Adult">
@@ -535,7 +529,7 @@
 				</div>
 
 				<label for="disability">Does this person have a disability?</label>
-				<select class="form-control"  id="00N63000000asv3" name="00N63000000asv3" title="Disability">
+				<select class="form-control" id="00N63000000asv3" name="00N63000000asv3" title="Disability">
 					<option value="">--None--</option>
 					<option value="Yes">Yes</option>
 					<option value="No">No</option>
@@ -544,7 +538,7 @@
 				</select><br>
 
 				<label for="healthInsurance">Does this person have health insurance?</label>
-				<select class="form-control"  id="00N63000000aswL" name="00N63000000aswL" title="Health Insurance">
+				<select class="form-control" id="00N63000000aswL" name="00N63000000aswL" title="Health Insurance">
 					<option value="">--None--</option>
 					<option value="Yes">Yes</option>
 					<option value="No">No</option>
@@ -554,7 +548,7 @@
 
 				<div class="Me SO Adult">
 					<label for="education">Highest Level of Education?</label>
-					<select class="form-control"  id="00N63000000aswa" name="00N63000000aswa" title="Highest Level of Education">
+					<select class="form-control" id="00N63000000aswa" name="00N63000000aswa" title="Highest Level of Education">
 						<option value="">--None--</option>
 						<option value="0-8">0-8</option>
 						<option value="9-12/Non-Graduate">9-12/Non-Graduate</option>
@@ -570,7 +564,7 @@
 				</div>
 
 				<label for="employment">Currently Employed?</label>
-				<select class="form-control"  id="00N63000000aswk" name="00N63000000aswk" title="Currently Employed">
+				<select class="form-control" id="00N63000000aswk" name="00N63000000aswk" title="Currently Employed">
 					<option value="">--None--</option>
 					<option value="Yes">Yes</option>
 					<option value="No">No</option>
@@ -583,7 +577,7 @@
 
 				<div class="Me">
 					<label for="domesticViolence">Are you now or have you ever been in a relationship where you were either physically or emotionally hurt, threatened, or made to feel afraid?</label>
-						<select class="form-control"  id="00N63000000asxi" name="00N63000000asxi" title="Domestic Violence">
+						<select class="form-control" id="00N63000000asxi" name="00N63000000asxi" title="Domestic Violence">
 						<option value="">--None--</option>
 						<option value="Yes">Yes</option>
 						<option value="No">No</option>
@@ -592,7 +586,7 @@
 					</select><br>
 
 					<label for="domesticViolenceTime">If so, when?</label>
-					<select class="form-control"  id="00N63000000asy2" name="00N63000000asy2" title="Domestic Violence: If so, when">
+					<select class="form-control" id="00N63000000asy2" name="00N63000000asy2" title="Domestic Violence: If so, when">
 						<option value="">--None--</option>
 						<option value="Within the past three months">Within the past three months</option>
 						<option value="3-6 months">3-6 months</option>
@@ -603,7 +597,7 @@
 					</select><br>
 
 					<label for="domesticViolenceOutreach">Are you interested in recieving information or speaking to smoeone about this relationship?</label>
-					<select class="form-control"  id="00N63000000asyC" name="00N63000000asyC" title="Domestic Violence: Outreach">
+					<select class="form-control" id="00N63000000asyC" name="00N63000000asyC" title="Domestic Violence: Outreach">
 						<option value="">--None--</option>
 						<option value="No">No</option>
 						<option value="Yes">Yes</option>
@@ -623,7 +617,7 @@
 					<br>
 
 					<label for="contact">May we contact you to provide you information and occasional updates about SHCS?</label>
-					<select class="form-control"  id="00N63000000asyb" name="00N63000000asyb" title="May We Contact You">
+					<select class="form-control" id="00N63000000asyb" name="00N63000000asyb" title="May We Contact You">
 						<option value="">--None--</option>
 						<option value="Yes">Yes</option>
 						<option value="No">No</option>
@@ -644,7 +638,7 @@
 					<br>
 
 					<label for="householdType">Household Type</label>
-					<select class="form-control"  id="00N63000000aszA" name="00N63000000aszA" title="Household Type">
+					<select class="form-control" id="00N63000000aszA" name="00N63000000aszA" title="Household Type">
 						<option value="">--None--</option>
 						<option value="Single Parent/Female">Single Parent/Female</option>
 						<option value="Single Parent/Male">Single Parent/Male</option>
@@ -676,7 +670,7 @@
 					<br>
 
 					<label for="HounsingStatus">Housing Status</label>
-					<select class="form-control"  id="00N63000000aszK" name="00N63000000aszK" title="Housing Status">
+					<select class="form-control" id="00N63000000aszK" name="00N63000000aszK" title="Housing Status">
 						<option value="">--None--</option>
 						<option value="I own: House">I own: House</option>
 						<option value="I own: Mobile Home">I own: Mobile Home</option>
@@ -738,7 +732,7 @@
 					<br><br>
 
 					<label for="householdIncome">Does any household member receive income from any source?</label>
-					<select class="form-control"  id="00N63000000at0w" name="00N63000000at0w" title="HH member receiving income?">
+					<select class="form-control" id="00N63000000at0w" name="00N63000000at0w" title="HH member receiving income?">
 						<option value="">--None--</option>
 						<option value="Yes">Yes</option>
 						<option value="No">No</option>
@@ -748,31 +742,68 @@
 
 					<label for="moreHousholdIncome">Is anyone in your household recieving any of the following? Please check all that apply and provide the amount in the box below the check</label><br>
 
-					<p1>Income: TANF/CalWorks:</p1> <input id="00N63000000at1f" name="00N63000000at1f" type="checkbox" value="1" /><br>
-					<span style="display: none;"><p1>Income Source: TANF / CalWORKS:</p1> <input id="00N63000000at2J" name="00N63000000at2J" size="20" class="form-control" type="text" /><br></span>
-					<p1>Income: SSI:</p1> <input id="00N63000000at1a" name="00N63000000at1a" type="checkbox" value="1" /><br>
-					<span style="display: none;"><p1>Income Source: SSI (Supmntl Sec Inc):</p1> <input id="00N63000000at2E" name="00N63000000at2E" size="20" class="form-control" type="text" /><br></span>
-					<p1>Income: Pension:</p1> <input id="00N63000000at1Q" name="00N63000000at1Q" type="checkbox" value="1" /><br>
-					<span style="display: none;"><p1>Income Source: Pension (Retirement):</p1> <input id="00N63000000at24" name="00N63000000at24" size="20" class="form-control" type="text" /><br></span>
-					<p1>Income: Unemployement:</p1> <input id="00N63000000at1k" name="00N63000000at1k" type="checkbox" value="1" /><br>
-					<span style="display: none;"><p1>Income Source: Unemployment (EDD):</p1> <input id="00N63000000at2O" name="00N63000000at2O" size="20" class="form-control" type="text" /><br></span>
-					<p1>Income: SSDI:</p1> <input id="00N63000000at1V" name="00N63000000at1V" type="checkbox" value="1" /><br>
-					<span style="display: none;"><p1>Income Source: SSDI (Soc Sec Dis Insnc):</p1> <input id="00N63000000at29" name="00N63000000at29" size="20" class="form-control" type="text" /><br></span>
-					<p1>Income: GA:</p1> <input id="00N63000000at16" name="00N63000000at16" type="checkbox" value="1" /><br>
-					<span style="display: none;"><p1>Income Source: General Assistance:</p1> <input id="00N63000000at1u" name="00N63000000at1u" size="20" class="form-control" type="text" /><br></span>
-					<p1>Income: Other:</p1> <input id="00N63000000at1B" name="00N63000000at1B" type="checkbox" value="1" /><br>
-					<span style="display: none;"><p1>Income Source: Other:</p1> <input id="00N63000000at1z" name="00N63000000at1z" size="20" class="form-control" type="text" /><br></span>
-					<p1>Benefits: CalFresh (Food Stamps):</p1> <input id="00N63000000at2i" name="00N63000000at2i" type="checkbox" value="1" /><br>
-					<p1>Benefits: WIC:</p1> <input id="00N63000000at32" name="00N63000000at32" type="checkbox" value="1" /><br>
-					<p1>Benefits: MediCare:</p1> <input id="00N63000000at2x" name="00N63000000at2x" type="checkbox" value="1" /><br>
-					<p1>Benefits: MediCal:</p1> <input id="00N63000000at2s" name="00N63000000at2s" type="checkbox" value="1" /><br>
-					<p1>Benefits: Other:</p1> <input id="00N63000000at4Z" name="00N63000000at4Z" type="checkbox" value="1" /><br>
-					<p1>Benefits: I prefer not to answer:</p1> <input id="00N63000000at2n" name="00N63000000at2n" type="checkbox" value="1" /><br>
-					<p1>Benefits: None of the above:</p1> <input id="00N63000000at3M" name="00N63000000at3M" type="checkbox" value="1" /><br>
-					<p1>Benefits: I don&#39;t know:</p1> <input id="00N63000000at4U" name="00N63000000at4U" type="checkbox" value="1" /><br><br>
+					<div class="hhIncomeValue">
+						<p1>TANF/CalWorks:</p1>
+						<input id="00N63000000at1f" name="00N63000000at1f" type="checkbox" value="1" />
+						<span style="display: none;">
+							<span style="float: right;">$ <input id="00N63000000at2J" name="00N63000000at2J" size="20" type="number" placeholder="Amount" /></span>
+						</span>
+					</div>
+					<div class="hhIncomeValue">
+						<p1>SSI:</p1>
+						<input id="00N63000000at1a" name="00N63000000at1a" type="checkbox" value="1" />
+						<span style="display: none;">
+							<span style="float: right;">$ <input id="00N63000000at2E" name="00N63000000at2E" size="20" type="number" placeholder="Amount" /></span>
+						</span>
+					</div>
+					<div class="hhIncomeValue">
+						<p1>Pension:</p1>
+						<input id="00N63000000at1Q" name="00N63000000at1Q" type="checkbox" value="1" />
+						<span style="display: none;">
+							<span style="float: right;">$ <input id="00N63000000at24" name="00N63000000at24" size="20" type="number" placeholder="Amount" /></span>
+						</span>
+					</div>
+					<div class="hhIncomeValue">
+						<p1>Unemployement:</p1>
+						<input id="00N63000000at1k" name="00N63000000at1k" type="checkbox" value="1" />
+						<span style="display: none;">
+							<span style="float: right;">$ <input id="00N63000000at2O" name="00N63000000at2O" size="20" type="number" placeholder="Amount" /></span>
+						</span>
+					</div>
+					<div class="hhIncomeValue">
+						<p1>SSDI:</p1>
+						<input id="00N63000000at1V" name="00N63000000at1V" type="checkbox" value="1" />
+						<span style="display: none;">
+							<span style="float: right;">$ <input id="00N63000000at29" name="00N63000000at29" size="20" type="number" placeholder="Amount" /></span>
+						</span>
+					</div>
+					<div class="hhIncomeValue">
+						<p1>GA:</p1>
+						<input id="00N63000000at16" name="00N63000000at16" type="checkbox" value="1" />
+						<span style="display: none;">
+							<span style="float: right;">$ <input id="00N63000000at1u" name="00N63000000at1u" size="20" type="number" placeholder="Amount" /></span>
+						</span>
+					</div>
+					<div class="hhIncomeValue">
+						<p1>Other:</p1>
+						<input id="00N63000000at1B" name="00N63000000at1B" type="checkbox" value="1" />
+						<span style="display: none;">
+							<span style="float: right;">$ <input id="00N63000000at1z" name="00N63000000at1z" size="20" type="number" placeholder="Amount" /></span>
+						</span>
+					</div>
+					<div class="hhIncomeValue"><p1>CalFresh (Food Stamps):</p1> <input id="00N63000000at2i" name="00N63000000at2i" type="checkbox" value="1" /></div>
+					<div class="hhIncomeValue"><p1>WIC:</p1> <input id="00N63000000at32" name="00N63000000at32" type="checkbox" value="1" /></div>
+					<div class="hhIncomeValue"><p1>MediCare:</p1> <input id="00N63000000at2x" name="00N63000000at2x" type="checkbox" value="1" /></div>
+					<div class="hhIncomeValue"><p1>MediCal:</p1> <input id="00N63000000at2s" name="00N63000000at2s" type="checkbox" value="1" /></div>
+					<div class="hhIncomeValue"><p1>Other:</p1> <input id="00N63000000at4Z" name="00N63000000at4Z" type="checkbox" value="1" /></div>
+					<div class="hhIncomeValue"><p1>I prefer not to answer:</p1> <input id="00N63000000at2n" name="00N63000000at2n" type="checkbox" value="1" /></div>
+					<div class="hhIncomeValue"><p1>None of the above:</p1> <input id="00N63000000at3M" name="00N63000000at3M" type="checkbox" value="1" /></div>
+					<div class="hhIncomeValue"><p1>I don&#39;t know:</p1> <input id="00N63000000at4U" name="00N63000000at4U" type="checkbox" value="1" /><br></div>
+
+					<br>
 
 					<label for="language">Preferred Language for Household</label>
-					<select class="form-control"  id="00N63000000at4F" name="00N63000000at4F" title="Preferred Language for Household">
+					<select class="form-control" id="00N63000000at4F" name="00N63000000at4F" title="Preferred Language for Household">
 						<option value="">--None--</option>
 						<option value="English">English</option>
 						<option value="Spanish">Spanish</option>
@@ -800,7 +831,7 @@
 				<option value="Child">Child</option>
 			</select><br>
 
-			<input type="submit" name="submit">
+			<button type="button" class="btn btn-primary" onclick="submitForms()">Submit</button>
 			<br><br><br><br>
 		</div>
 	</body>

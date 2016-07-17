@@ -8,6 +8,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="validator.min.js"></script>
 		<script type="text/javascript" src="webcam.min.js"></script>
+		<script type="text/javascript" src="drawingboard.min.js"></script>
 		
 		<!-- script to hide/show different fields based on who is being registered -->
 		<script>
@@ -797,6 +798,9 @@
 			<input type=button class="btn btn-secondary" value="Take Snapshot" onClick="take_snapshot()">
 			<div id="my_results"></div>
 			<br>
+			<label for="my_signature">Please sign here</label>
+			<div class="well" id="signature"></div>
+			<input type=button class="btn btn-secondary" value="Save Signature" onClick="save_signature()">
 
 			<!-- Image caputring code -->
 			<script language="JavaScript">
@@ -816,12 +820,52 @@
 					Webcam.snap( function(data_uri) {
 					// display results in page
 					document.getElementById('my_results').innerHTML = 
-						'<label for="photoID">Here is your image:</label>' + 
+						'<label for="photoID">Here is your image:</label><br>' + 
 						'<img src="'+data_uri+'"/>';
 					} );
 				}
 			</script>
 
+			<!-- signature capturing code -->
+			<script>
+			var simpleBoard = new DrawingBoard.Board('signature', {
+				controls: [{ Navigation: { back: false, forward: false } }],
+				webStorage: false,
+				size: 1
+			});
+			</script>
+
+			<!-- SIGNATURE HANDLING CODE -->
+			<script type="text/javascript">
+			
+			function save_signature() {
+			   //get drawingboard content
+			  var img = simpleBoard.getImg();
+			  
+			  //we keep drawingboard content only if it's not the 'blank canvas'
+			  var imgInput = (simpleBoard.blankCanvas == img) ? '' : img;
+			  console.log("Pressed Submit button for canvas")
+			  
+			  //put the drawingboard content somewhere
+			  //TODO
+
+			  //we can also assume that everything goes well server-side
+			  //and directly clear webstorage here so that the drawing isn't shown again after form submission
+			  //but the best would be to do when the server answers that everything went well
+			  simpleBoard.clearWebStorage();
+			}
+			
+			</script>
+
+			<!-- signature handling code -->
+			<script>
+				function save_signature(){
+
+
+				}
+			</script>
+
+			<br><br>
 			<button type="button" class="btn btn-primary" onclick="submitForms()">Submit</button>
 			<br><br><br><br>
 		</div>

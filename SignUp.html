@@ -7,6 +7,8 @@
 		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="validator.min.js"></script>
+		<script type="text/javascript" src="webcam.min.js"></script>
+		
 		<!-- script to hide/show different fields based on who is being registered -->
 		<script>
 			function submitForms(event) {
@@ -789,6 +791,36 @@
 				<option value="Adult">Another Adult</option>
 				<option value="Child">Child</option>
 			</select><br>
+
+			<label for="camera">Please Take a Picture of your ID</label>
+			<div id="my_camera"></div>
+			<input type=button class="btn btn-secondary" value="Take Snapshot" onClick="take_snapshot()">
+			<div id="my_results"></div>
+			<br>
+
+			<!-- Image caputring code -->
+			<script language="JavaScript">
+				Webcam.set({
+					width: 320,
+					height: 240,
+					image_format: 'jpeg',
+					jpeg_quality: 90
+				});
+				Webcam.attach( '#my_camera' );
+			</script>
+
+			<!-- image handling code -->
+			<script language="JavaScript">
+				function take_snapshot() {
+					// take snapshot and get image data
+					Webcam.snap( function(data_uri) {
+					// display results in page
+					document.getElementById('my_results').innerHTML = 
+						'<label for="photoID">Here is your image:</label>' + 
+						'<img src="'+data_uri+'"/>';
+					} );
+				}
+			</script>
 
 			<button type="button" class="btn btn-primary" onclick="submitForms()">Submit</button>
 			<br><br><br><br>

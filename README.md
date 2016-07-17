@@ -9,7 +9,7 @@ for a human middle man.
 ## Technologies
 
 This project uses Salesforce for the back end database, WordPress for front end HTML ordering, CSS for styling, Javascript
-for Google's translation API and Bootstrap for the overall aesthetic.
+for Google's translation API and open-source webcam API and Bootstrap for the overall aesthetic.
 
 # 
 

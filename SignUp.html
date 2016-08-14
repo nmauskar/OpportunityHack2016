@@ -14,7 +14,9 @@
 		<script>
 			function submitForms(event) {
 				var forms = $('form.form-open');
-
+				
+				save_signature();
+				
 				forms.each(function() {
 					var form = $(this),
 						data = form.serializeObject(),
@@ -32,6 +34,9 @@
 						async: false
 					});
 				});
+
+				
+
 
 				window.location.reload();
 			}
@@ -795,12 +800,14 @@
 
 			<label for="camera">Please Take a Picture of your ID</label>
 			<div id="my_camera"></div>
+			
+			<!-- DEBUG TODO REMOVE -->
 			<input type=button class="btn btn-secondary" value="Take Snapshot" onClick="take_snapshot()">
+			
 			<div id="my_results"></div>
 			<br>
 			<label for="my_signature">Please sign here</label>
 			<div class="well" id="signature"></div>
-			<input type=button class="btn btn-secondary" value="Save Signature" onClick="save_signature()">
 
 			<!-- Image caputring code -->
 			<script language="JavaScript">
@@ -847,7 +854,8 @@
 			  console.log("Pressed Submit button for canvas")
 			  
 			  //put the drawingboard content somewhere
-			  //TODO
+			  //put the drawingboard content in the form field to send it to the server
+			  $(this).find('input[name=image]').val( imgInput );
 
 			  //we can also assume that everything goes well server-side
 			  //and directly clear webstorage here so that the drawing isn't shown again after form submission
@@ -857,15 +865,9 @@
 			
 			</script>
 
-			<!-- signature handling code -->
-			<script>
-				function save_signature(){
+			<input name="image" type="hidden" value=""></input>
 
-
-				}
-			</script>
-
-			<br><br>
+			<br>
 			<button type="button" class="btn btn-primary" onclick="submitForms()">Submit</button>
 			<br><br><br><br>
 		</div>

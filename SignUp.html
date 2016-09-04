@@ -12,6 +12,10 @@
 		
 		<!-- script to hide/show different fields based on who is being registered -->
 		<script>
+			var SOCount = 0;
+			var adultCount = 0;
+			var childCount = 0;
+		
 			function submitForms(event) {
 				var forms = $('form.form-open');
 				
@@ -76,23 +80,37 @@
 
 				$('#customer').change(function() {
 					var element;
+					var menuElement;
+					var count;
 
 					switch ($(this).val()) {
 						case 'SO':
 							element = $('#registration-spouse').clone();
+							menuElement = $('#sidebar-SO').clone();
+							SOCount = SOCount + 1;
+							count = SOCount;
 							break;
 						case 'Adult':
 							element = $('#registration-adult').clone();
+							menuElement = $('#sidebar-adult').clone();
+							adultCount = adultCount + 1;
+							count = adultCount;
 							break;
 						case 'Child':
 							element = $('#registration-child').clone();
+							menuElement = $('#sidebar-child').clone();
+							childCount = childCount + 1;
+							count = childCount;
 							break;
 					}
 
 					if (element) {
-						element.show().attr('id', '').addClass('form-open');
+						element.show().attr('id', element.attr('id') + '-' + count).addClass('form-open');
+						menuElement.show().attr('id', menuElement.attr('id') + '-' + count);
+						menuElement.children('a').eq(0).attr('href','#' + element.attr('id'));
 
 						$('#additionalLeads').append(element);
+						$('#sidebar-menu').append(menuElement);
 
 						$(this).val('none');
 
@@ -134,12 +152,30 @@
 				border-bottom: solid 1px #000;
 				text-align: right;
 			}
+			
+			form::before {
+				content:"";
+				display:block;
+				height:50px; /* fixed header height*/
+				margin:-50px 0 0; /* negative fixed header height */
+			}
+			
+			form, #end-of-form {
+				padding-right: 50px; /*so there is no overlap with right navbar*/
+			}
 		</style>
 	</head>
 	<body>
 		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+		
+		<ul id="sidebar-menu" class="nav nav-pills nav-stacked" style="position:fixed; right:0; top:35%;">
+			<li><a href="#">Main</a></li>
+			<li id="sidebar-adult"style="display: none;"><a href="#">Adult</a></li>
+			<li id="sidebar-SO" style="display: none;"><a href="#">Spouse</a></li>
+			<li id="sidebar-child" style="display: none;"><a href="#">Child</a></li>
+		</ul>
 
 		<form data-toggle="validator" role="form" id="registration-spouse" style="display: none;" action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
 			<input type=hidden name="oid" value="00D630000008yyp">
@@ -789,14 +825,16 @@
 
 			<div id="additionalLeads"></div>
 
-			<!-- who is the form for -->
-			<label for="customer">Do you want to sign up another person?</label>
-			<select class="form-control" id="customer" name="customer">
-				<option value="none" selected="selected">No</option>
-				<option value="SO">Spouse/Significant Other</option>
-				<option value="Adult">Another Adult</option>
-				<option value="Child">Child</option>
-			</select><br>
+			<div id="end-of-form">
+				<!-- who is the form for -->
+				<label for="customer">Do you want to sign up another person?</label>
+				<select class="form-control" id="customer" name="customer">
+					<option value="none" selected="selected">No</option>
+					<option value="SO">Spouse/Significant Other</option>
+					<option value="Adult">Another Adult</option>
+					<option value="Child">Child</option>
+				</select><br>
+			
 
 			<label for="camera">Please Take a Picture of your ID</label>
 			<div id="my_camera"></div>
@@ -808,6 +846,7 @@
 			<br>
 			<label for="my_signature">Please sign here</label>
 			<div class="well" id="signature"></div>
+			</div>
 
 			<!-- Image caputring code -->
 			<script language="JavaScript">
